@@ -86,10 +86,7 @@
        Tamaño recomendado: 96×96px o mayor, formato PNG/WebP con fondo transparente.
        Si no tienes imagen, el texto "LC" se muestra como fallback.
     ── */
-    .splash-logo-img {
-      width: 100%; height: 100%; object-fit: cover;
-      display: block;
-    }
+    /* → Estilos en bloque IMÁGENES al final del CSS */
     .splash-logo-fallback {
       font-family: var(--font-display); font-size: 36px; font-weight: 800;
       color: var(--white);
@@ -178,7 +175,7 @@
        Tamaño recomendado: 36×36px o mayor, PNG con fondo transparente.
        Cambia display:none a display:block cuando tengas imagen.
     ── */
-    .nav-logo-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* → .nav-logo-img estilos en bloque IMÁGENES al final del CSS */
     .nav-logo-fallback {
       font-family: var(--font-display); font-size: 15px; font-weight: 800; color: var(--white);
     }
@@ -338,7 +335,7 @@
     }
     .hero-img-placeholder .ph-icon { font-size: 48px; }
     /* Cuando tengas imagen: <img class="hero-img" src="TU_IMAGEN.jpg" alt="Terapia"> */
-    .hero-img { width: 100%; max-width: 380px; border-radius: 24px; box-shadow: var(--shadow-lg); display: block; object-fit: cover; }
+    /* → .hero-img estilos en bloque IMÁGENES al final del CSS */
 
     /* ════════════════════════════════════════════════
        SECCIONES BASE
@@ -804,45 +801,40 @@
        Compatible con cualquier resolución o tamaño de imagen
     ════════════════════════════════════════════════ */
 
-    /* Servicios */
-    .service-img {
-      width: 52px; height: 52px;
-      object-fit: contain;
-      display: block; margin: 0 auto;
-      border-radius: 50%;
+    /* ── IMAGEN HERO (480×540px o mayor) ── */
+    .hero-img {
+      width: 100%; max-width: 380px;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 480 / 540;
     }
 
-    /* Instituciones educativas */
-    .institution-img {
-      width: auto; max-width: 100%; max-height: 48px;
-      object-fit: contain;
-      display: block; margin: 0 auto;
-    }
-    .institution-badge {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 64px;
-    }
-
-    /* Métodos de pago */
-    .pay-img {
-      width: auto; max-width: 100%; max-height: 40px;
-      object-fit: contain;
-      display: block; margin: 0 auto;
-    }
-    .pay-method {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 64px;
-    }
-
-    /* Redes sociales */
-    .social-img {
-      width: 22px; height: 22px;
+    /* ── LOGO SPLASH (96×96px) ── */
+    .splash-logo-img {
+      width: 100%; height: 100%;
       object-fit: contain;
       display: block;
-      filter: brightness(0) invert(1);
     }
 
-    /* Especialistas */
+    /* ── LOGO NAVBAR (36×36px) ── */
+    .nav-logo-img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ── SERVICIOS (64×64px recomendado) ── */
+    .service-img {
+      width: 54px; height: 54px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── ESPECIALISTAS (100×100px mínimo) ── */
     .specialist-avatar img {
       width: 100%; height: 100%;
       object-fit: cover;
@@ -850,13 +842,73 @@
       display: block;
     }
 
-    /* Hero image responsive */
-    @media (max-width: 767px) {
-      .hero-img-wrap { display: flex; justify-content: center; margin-top: 24px; }
-      .hero-img { max-width: 280px; }
+    /* ── INSTITUCIONES EDUCATIVAS (64×32px o mayor) ── */
+    .institution-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 8px;
+      min-height: 68px;
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--gray-mid);
+      box-shadow: var(--shadow-sm);
+    }
+    .institution-img {
+      width: auto;
+      max-width: 100%;
+      max-height: 44px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
     }
 
-    /* Responsive general para imágenes */
+    /* ── MÉTODOS DE PAGO (80×48px recomendado) ── */
+    .pay-method {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 6px;
+      min-height: 64px;
+      background: var(--white);
+      border-radius: 10px;
+      border: 2px solid var(--gray-mid);
+      transition: border-color 0.2s;
+    }
+    .pay-method:hover { border-color: var(--blue); }
+    .pay-img {
+      width: auto;
+      max-width: 68px;
+      max-height: 40px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── REDES SOCIALES (22×22px) ── */
+    .social-img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ── BOTONES SOS / WHATSAPP ── */
+    #sos-btn img, #whatsapp-btn img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ── RESPONSIVE HERO ── */
+    @media (max-width: 767px) {
+      .hero-img-wrap { display: flex; justify-content: center; margin-top: 24px; }
+      .hero-img { max-width: 88vw; aspect-ratio: 480 / 540; }
+    }
+
+    /* Regla base — ninguna imagen se desborda ni pierde proporción */
     img { max-width: 100%; height: auto; }
 
     /* ════════════════════════════════════════════════
@@ -864,23 +916,26 @@
     ════════════════════════════════════════════════ */
     @media (max-width: 480px) {
       .institutions-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .payment-methods { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .institution-badge, .pay-method { padding: 10px 4px; min-height: 56px; }
-      .institution-img { max-height: 36px; }
-      .pay-img { max-height: 32px; }
-      .service-circle { width: 72px; height: 72px; }
-      .service-img { width: 40px; height: 40px; }
-      .specialist-card { min-width: 240px; }
+      .payment-methods    { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .institution-badge  { padding: 8px 4px; min-height: 54px; }
+      .institution-img    { max-height: 32px; }
+      .pay-method         { padding: 8px 4px; min-height: 54px; }
+      .pay-img            { max-width: 52px; max-height: 30px; }
+      .service-circle     { width: 72px; height: 72px; }
+      .service-img        { width: 40px; height: 40px; }
+      .specialist-card    { min-width: 240px; }
     }
     @media (min-width: 481px) and (max-width: 768px) {
       .institutions-grid { grid-template-columns: repeat(3, 1fr); }
-      .payment-methods { grid-template-columns: repeat(3, 1fr); }
+      .payment-methods   { grid-template-columns: repeat(3, 1fr); }
+      .institution-img   { max-height: 38px; }
+      .pay-img           { max-width: 60px; max-height: 36px; }
     }
     @media (min-width: 1024px) {
       .specialist-card { min-width: 280px; }
-      .hero-img { max-width: 460px; }
-      .institution-img { max-height: 56px; }
-      .pay-img { max-height: 48px; }
+      .hero-img        { max-width: 460px; }
+      .institution-img { max-height: 52px; }
+      .pay-img         { max-width: 72px; max-height: 44px; }
     }
   </style>
 </head>
@@ -900,7 +955,7 @@
            Cuando tengas la imagen, cambia display:none a display:block en .splash-logo-img (CSS)
            y elimina o cambia display:none del .splash-logo-fallback.
       ── -->
-      <img class="splash-logo-img" src="./images/pprincipal.png" alt="Línea Contigo" />
+      <img class="splash-logo-img" src="public/images/pprincipal.png" alt="Línea Contigo" />
       <span class="splash-logo-fallback" style="display:none">LC</span>
     </div>
     <div>
@@ -940,7 +995,7 @@
            Reemplaza src="" con la URL de tu logo.
            Cambia display:none a display:block en .nav-logo-img (CSS).
       ── -->
-      <img class="nav-logo-img" src="./images/logo.png" alt="Logo" />
+      <img class="nav-logo-img" src="public/images/logo.png" alt="Logo" />
       <span class="nav-logo-fallback" style="display:none">LC</span>
     </div>
     <div>
@@ -1030,7 +1085,7 @@
           <span>Imagen principal aquí</span>
           <span style="font-size:11px;opacity:0.6">480×480px recomendado</span>
         </div>
-        <img class="hero-img" src="./images/psico.png" alt="Terapia psicológica" style="display:block">
+        <img class="hero-img" src="public/images/psico.png" alt="Terapia psicológica" style="display:block">
       </div>
     </div>
   </section>
@@ -1071,17 +1126,17 @@
         <h2 class="section-title">Conoce Nuestros Servicios</h2>
         <div class="services-grid">
           <!-- POSICIÓN 1: Terapia Individual → ./images/ainvididual.png -->
-          <div class="service-item"><div class="service-circle"><img src="./images/ainvididual.png" alt="Terapia Individual" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Terapia Individual</div></div>
+          <div class="service-item"><div class="service-circle"><img src="public/images/ainvididual.png" alt="Terapia Individual" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Terapia Individual</div></div>
           <!-- POSICIÓN 2: Terapia de Pareja → ./images/apareja.png -->
-          <div class="service-item"><div class="service-circle"><img src="./images/apareja.png" alt="Terapia de Pareja" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Terapia de Pareja</div></div>
+          <div class="service-item"><div class="service-circle"><img src="public/images/apareja.png" alt="Terapia de Pareja" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Terapia de Pareja</div></div>
           <!-- POSICIÓN 3: Psicología Infantil → ./images/aninos.png -->
-          <div class="service-item"><div class="service-circle"><img src="./images/aninos.png" alt="Psicología Infantil" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Psicología Infantil</div></div>
+          <div class="service-item"><div class="service-circle"><img src="public/images/aninos.png" alt="Psicología Infantil" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Psicología Infantil</div></div>
           <!-- POSICIÓN 4: Empoderamiento → ./images/empoderamiento.png -->
-          <div class="service-item"><div class="service-circle"><img src="./images/empoderamiento.png" alt="Empoderamiento" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Empoderamiento</div></div>
+          <div class="service-item"><div class="service-circle"><img src="public/images/empoderamiento.png" alt="Empoderamiento" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Empoderamiento</div></div>
           <!-- POSICIÓN 5: Mindfulness → ./images/mindfulness.png -->
-          <div class="service-item"><div class="service-circle"><img src="./images/mindfulness.png" alt="Mindfulness" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Mindfulness</div></div>
+          <div class="service-item"><div class="service-circle"><img src="public/images/mindfulness.png" alt="Mindfulness" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Mindfulness</div></div>
           <!-- POSICIÓN 6: Tanatología → ./images/tanatologia.png -->
-          <div class="service-item"><div class="service-circle"><img src="./images/tanatologia.png" alt="Tanatología" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Tanatología</div></div>
+          <div class="service-item"><div class="service-circle"><img src="public/images/tanatologia.png" alt="Tanatología" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Tanatología</div></div>
         </div>
       </div>
     </div>
@@ -1159,17 +1214,17 @@
         <p class="section-body">Nuestros especialistas están respaldados por instituciones de reconocido prestigio.</p>
         <div class="institutions-grid">
           <!-- POSICIÓN 1: UVM → ./images/uvm.png -->
-          <div class="institution-badge"><img src="./images/uvm.png" alt="UVM" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="institution-badge"><img src="public/images/uvm.png" alt="UVM" class="institution-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 2: UACH → ./images/uach.png -->
-          <div class="institution-badge"><img src="./images/uach.png" alt="UACH" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="institution-badge"><img src="public/images/uach.png" alt="UACH" class="institution-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 3: UVA → ./images/uva.png -->
-          <div class="institution-badge"><img src="./images/uva.png" alt="UVA" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="institution-badge"><img src="public/images/uva.png" alt="UVA" class="institution-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 4: IMSS → ./images/imss.png -->
-          <div class="institution-badge"><img src="./images/imss.png" alt="IMSS" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="institution-badge"><img src="public/images/imss.png" alt="IMSS" class="institution-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 5: ISSSTE → ./images/isste.png -->
-          <div class="institution-badge"><img src="./images/isste.png" alt="ISSSTE" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="institution-badge"><img src="public/images/isste.png" alt="ISSSTE" class="institution-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 6: SSA Chih. → ./images/ssa.png -->
-          <div class="institution-badge"><img src="./images/ssa.png" alt="SSA Chih." class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="institution-badge"><img src="public/images/ssa.png" alt="SSA Chih." class="institution-img" onerror="this.style.opacity='0.3'"></div>
         </div>
       </div>
     </div>
@@ -1183,17 +1238,17 @@
         <h2 class="section-title">Métodos de Pago</h2>
         <div class="payment-methods">
           <!-- POSICIÓN 1: Visa → ./images/visa.png -->
-          <div class="pay-method"><img src="./images/visa.png" alt="Visa" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="pay-method"><img src="public/images/visa.png" alt="Visa" class="pay-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 2: Mastercard → ./images/master.png -->
-          <div class="pay-method"><img src="./images/master.png" alt="Mastercard" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="pay-method"><img src="public/images/master.png" alt="Mastercard" class="pay-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 3: PayPal → ./images/paypal.png -->
-          <div class="pay-method"><img src="./images/paypal.png" alt="PayPal" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="pay-method"><img src="public/images/paypal.png" alt="PayPal" class="pay-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 4: Efectivo → ./images/efectivo.png -->
-          <div class="pay-method"><img src="./images/efectivo.png" alt="Efectivo" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="pay-method"><img src="public/images/efectivo.png" alt="Efectivo" class="pay-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 5: Transferencia → ./images/transferencia.png -->
-          <div class="pay-method"><img src="./images/transferencia.png" alt="Transferencia" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="pay-method"><img src="public/images/transferencia.png" alt="Transferencia" class="pay-img" onerror="this.style.opacity='0.3'"></div>
           <!-- POSICIÓN 6: Depósito → ./images/deposito.png -->
-          <div class="pay-method"><img src="./images/deposito.png" alt="Depósito" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <div class="pay-method"><img src="public/images/deposito.png" alt="Depósito" class="pay-img" onerror="this.style.opacity='0.3'"></div>
         </div>
         <div class="payment-note">Consulta directamente con el especialista para confirmar su método de cobro preferido.</div>
       </div>
@@ -1295,19 +1350,19 @@
           <div class="social-row">
             <!-- POSICIÓN 1: Facebook → ./images/facebook.png -->
             <a class="social-btn" href="#" target="_blank" title="Facebook" onclick="return alertRed('Facebook')">
-              <img src="./images/facebook.png" alt="Facebook" class="social-img" onerror="this.outerHTML='f'">
+              <img src="public/images/facebook.png" alt="Facebook" class="social-img" onerror="this.outerHTML='f'">
             </a>
             <!-- POSICIÓN 2: Instagram → ./images/instagram.png -->
             <a class="social-btn" href="#" target="_blank" title="Instagram" onclick="return alertRed('Instagram')">
-              <img src="./images/instagram.png" alt="Instagram" class="social-img" onerror="this.outerHTML='📸'">
+              <img src="public/images/instagram.png" alt="Instagram" class="social-img" onerror="this.outerHTML='📸'">
             </a>
             <!-- POSICIÓN 3: LinkedIn → ./images/linkedin.png -->
             <a class="social-btn" href="#" target="_blank" title="LinkedIn" onclick="return alertRed('LinkedIn')">
-              <img src="./images/linkedin.png" alt="LinkedIn" class="social-img" onerror="this.outerHTML='in'">
+              <img src="public/images/linkedin.png" alt="LinkedIn" class="social-img" onerror="this.outerHTML='in'">
             </a>
             <!-- POSICIÓN 4: YouTube → ./images/yt.png -->
             <a class="social-btn" href="#" target="_blank" title="YouTube" onclick="return alertRed('YouTube')">
-              <img src="./images/yt.png" alt="YouTube" class="social-img" onerror="this.outerHTML='▶'">
+              <img src="public/images/yt.png" alt="YouTube" class="social-img" onerror="this.outerHTML='▶'">
             </a>
           </div>
           <div class="copyright">
@@ -1538,8 +1593,8 @@
 </div><!-- /view-user -->
 
 <!-- ── BOTÓN SOS ── -->
-<button id="sos-btn" onclick="emergencyCall()" title="Emergencia — Llamar al 911">
-  <img src="./images/emergencia.png" alt="Emergencia" style="width:32px;height:32px;object-fit:contain;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+<button id="sos-btn" onclick="emergencyCall()" title="Emergencia — Llamar al 6392311870">
+  <img src="public/images/emergencia.png" alt="Emergencia" style="width:32px;height:32px;object-fit:contain;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
   <span class="sos-icon" style="display:none">SOS</span>
 </button>
 
@@ -1549,7 +1604,7 @@
      Ejemplo: 5216141234567
 ── -->
 <a id="whatsapp-btn" href="https://wa.me/5216141000000?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20Línea%20Contigo." target="_blank" title="WhatsApp">
-  <img src="./images/whap.png" alt="WhatsApp" style="width:32px;height:32px;object-fit:contain;display:block;" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-size:26px;color:white\'>💬</span>')">
+  <img src="public/images/whap.png" alt="WhatsApp" style="width:32px;height:32px;object-fit:contain;display:block;" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-size:26px;color:white\'>💬</span>')">
 </a>
 
 <!-- ── MODAL PRIVACIDAD ── -->
@@ -1609,7 +1664,7 @@
         <div class="specialist-card-header">
           <div class="specialist-avatar">
             <img
-              src="./images/${s.initials.toLowerCase()}.png"
+              src="public/images/${s.initials.toLowerCase()}.png"
               alt="${s.name}"
               style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"
               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
@@ -1822,7 +1877,7 @@
   document.getElementById('privacy-modal').addEventListener('click', e => { if(e.target===document.getElementById('privacy-modal')) closePrivacy(); });
 
   /* ══ SOS ══ */
-  function emergencyCall() { if(confirm('⚠️ ¿Deseas llamar al servicio de emergencias 911?')) window.location.href='tel:911'; }
+  function emergencyCall() { if(confirm('⚠️ ¿Deseas llamar al número de emergencias?')) window.location.href='tel:6392311870'; }
 
   /* ══ REDES SOCIALES ══ */
   function alertRed(red) { alert(`Link de ${red} no configurado aún. Edita el href en el HTML de la sección de Redes Sociales.`); return false; }
