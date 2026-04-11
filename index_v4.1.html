@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Línea Contigo — Salud Mental Delicias & Meoqui</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ════════════════════════════════════════════════
+       PALETA DE COLORES — v2
+       Edita estos valores para cambiar todos los colores
+       del sitio de forma centralizada.
+    ════════════════════════════════════════════════ */
+    :root {
+      --blue:        #004aad;   /* Color principal — fondos hero, navbar, secciones */
+      --blue-dark:   #003585;   /* Variante oscura del azul */
+      --blue-light:  #1a62c8;   /* Variante clara del azul */
+      --green:       #387c7c;   /* Títulos y pequeños detalles */
+      --green-light: #4a9e9e;   /* Hover / acento verde */
+      --yellow:      #f6c89f;   /* Pequeños detalles y acentos cálidos */
+      --gray-bg:     #d9d9d9;   /* Fondo de recuadros de texto */
+      --gray-light:  #f2f4f8;   /* Fondo secciones alternas */
+      --gray-mid:    #dde2ec;   /* Bordes y separadores */
+      --gray-text:   #555e70;   /* Texto secundario */
+      --black:       #111827;   /* Texto principal */
+      --white:       #ffffff;
+      --purple:      #6b46c1;   /* Acento morado */
+      --purple-light:#8b5cf6;
+
+      --font-display: 'Nunito', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+
+      --shadow-sm: 0 2px 8px rgba(0,74,173,0.08);
+      --shadow-md: 0 8px 32px rgba(0,74,173,0.14);
+      --shadow-lg: 0 20px 60px rgba(0,74,173,0.18);
+
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    /* ════════════════════════════════════════════════
+       RESET & BASE
+    ════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ════════════════════════════════════════════════
+       SPLASH SCREEN — Pantalla de Inicio
+    ════════════════════════════════════════════════ */
+    #splash {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(160deg, var(--blue-dark) 0%, var(--blue) 60%, var(--purple) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px 24px;
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+    #splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    /* ── LOGO SPLASH
+       Para cambiar el logo del splash, modifica la imagen dentro de
+       .splash-logo-img (ver más abajo en el HTML)
+    ── */
+    .splash-logo-wrap {
+      margin-bottom: 28px;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .splash-logo-circle {
+      width: 96px; height: 96px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 3px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    /* ── IMAGEN LOGO SPLASH ──
+       Reemplaza el src="" por la URL de tu logo real.
+       Tamaño recomendado: 96×96px o mayor, formato PNG/WebP con fondo transparente.
+       Si no tienes imagen, el texto "LC" se muestra como fallback.
+    ── */
+    /* → Estilos en bloque IMÁGENES al final del CSS */
+    .splash-logo-fallback {
+      font-family: var(--font-display); font-size: 36px; font-weight: 800;
+      color: var(--white);
+    }
+    .splash-app-name {
+      font-family: var(--font-display); font-size: 28px; font-weight: 800;
+      color: var(--white); text-align: center; line-height: 1.1;
+    }
+    .splash-app-sub {
+      font-size: 13px; color: rgba(255,255,255,0.65);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-top: 4px; text-align: center;
+    }
+
+    .splash-divider {
+      width: 48px; height: 2px;
+      background: var(--yellow); border-radius: 2px;
+      margin: 24px 0;
+    }
+
+    .splash-google-btn {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--white); color: var(--black);
+      padding: 14px 28px; border-radius: 50px;
+      font-family: var(--font-body); font-size: 15px; font-weight: 600;
+      border: none; cursor: pointer; width: 100%; max-width: 320px;
+      justify-content: center; margin-bottom: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    .splash-google-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+    .google-icon {
+      width: 22px; height: 22px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="%234285F4" d="M24 9.5c3.5 0 6.5 1.2 8.9 3.2l6.6-6.6C35.5 2.5 30.1 0 24 0 14.6 0 6.6 5.4 2.6 13.4l7.7 6C12.1 13.2 17.6 9.5 24 9.5z"/><path fill="%2334A853" d="M46.5 24.5c0-1.6-.1-3.2-.4-4.7H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.4 5.7c4.4-4 7.2-10 7.2-17.2z"/><path fill="%23FBBC05" d="M10.3 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.7-6A23.9 23.9 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.7-6.2z"/><path fill="%23EA4335" d="M24 48c6.1 0 11.2-2 14.9-5.5l-7.4-5.7c-2 1.4-4.6 2.2-7.5 2.2-6.4 0-11.9-3.7-13.7-9.2l-7.7 6.2C6.6 42.6 14.6 48 24 48z"/></svg>') center/contain no-repeat;
+      flex-shrink: 0;
+    }
+    .splash-visitor-btn {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; background: transparent;
+      color: rgba(255,255,255,0.8); padding: 12px 28px;
+      border-radius: 50px; font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      border: 2px solid rgba(255,255,255,0.3); cursor: pointer;
+      width: 100%; max-width: 320px; transition: all 0.2s;
+    }
+    .splash-visitor-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+    .splash-privacy-note {
+      margin-top: 24px; font-size: 11px; color: rgba(255,255,255,0.4);
+      text-align: center; max-width: 280px; line-height: 1.6;
+    }
+
+    /* ════════════════════════════════════════════════
+       VISTAS / PÁGINAS (sistema de pestañas)
+    ════════════════════════════════════════════════ */
+    .view { display: none; }
+    .view.active { display: block; }
+    #view-main { display: block; } /* Vista por defecto */
+
+    /* ════════════════════════════════════════════════
+       NAVBAR
+    ════════════════════════════════════════════════ */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--blue);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; height: 60px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+
+    /* ── LOGO NAVBAR
+       Al hacer click sobre el logo regresa al inicio de la página principal.
+       Para cambiar la imagen del logo, edita .nav-logo-img (ver HTML más abajo).
+    ── */
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer; text-decoration: none;
+    }
+    .nav-logo-img-wrap {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; border: 2px solid rgba(255,255,255,0.25);
+    }
+    /* ── IMAGEN LOGO NAVBAR ──
+       Reemplaza src="" con la URL de tu logo.
+       Tamaño recomendado: 36×36px o mayor, PNG con fondo transparente.
+       Cambia display:none a display:block cuando tengas imagen.
+    ── */
+    /* → .nav-logo-img estilos en bloque IMÁGENES al final del CSS */
+    .nav-logo-fallback {
+      font-family: var(--font-display); font-size: 15px; font-weight: 800; color: var(--white);
+    }
+    .nav-logo-text { font-family: var(--font-display); font-size: 15px; color: var(--white); font-weight: 700; line-height: 1.1; }
+    .nav-logo-sub { font-size: 9px; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .nav-right { display: flex; align-items: center; gap: 6px; }
+    .nav-user-btn {
+      width: 36px; height: 36px; border-radius: 50%; border: none; cursor: pointer;
+      background: rgba(255,255,255,0.15); overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid rgba(255,255,255,0.25); transition: all 0.2s;
+    }
+    .nav-user-btn:hover { background: rgba(255,255,255,0.25); }
+    /* ── IMAGEN AVATAR NAVBAR ──
+       Si el usuario inició sesión con Google, su foto aparece aquí automáticamente.
+       Para un visitante, se muestra el icono de persona.
+    ── */
+    .nav-user-avatar { width: 100%; height: 100%; object-fit: cover; display: none; border-radius: 50%; }
+    .nav-user-icon { font-size: 18px; color: var(--white); }
+    .nav-menu-btn {
+      background: none; border: none; cursor: pointer;
+      display: flex; flex-direction: column; gap: 5px; padding: 6px;
+    }
+    .nav-menu-btn span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; }
+
+    /* ════════════════════════════════════════════════
+       BARRA RÁPIDA — Quick Nav
+    ════════════════════════════════════════════════ */
+    #quick-nav-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    #quick-nav-overlay.open { opacity: 1; pointer-events: all; }
+    #quick-nav-panel {
+      position: fixed; top: 0; left: -320px; bottom: 0; width: 290px; z-index: 2100;
+      background: var(--blue-dark); padding: 24px 0;
+      transition: left 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+      box-shadow: 4px 0 32px rgba(0,0,0,0.3);
+      overflow-y: auto;
+    }
+    #quick-nav-panel.open { left: 0; }
+    .qnav-close {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,0.1); border: none; cursor: pointer;
+      color: var(--white); font-size: 18px;
+      width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; transition: background 0.2s;
+    }
+    .qnav-close:hover { background: rgba(255,255,255,0.2); }
+    .qnav-title { padding: 0 24px 20px; font-family: var(--font-display); font-size: 20px; font-weight: 800; color: var(--white); border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .qnav-section-label { padding: 16px 24px 6px; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4); letter-spacing: 0.14em; text-transform: uppercase; }
+    .qnav-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 24px; cursor: pointer;
+      color: rgba(255,255,255,0.82); font-size: 14px; font-weight: 500;
+      border-bottom: 1px solid rgba(255,255,255,0.05); transition: all 0.2s;
+    }
+    .qnav-item:hover { background: rgba(56,124,124,0.25); color: var(--yellow); }
+    .qnav-bullet { font-size: 18px; width: 22px; text-align: center; color: rgba(255,255,255,0.5); flex-shrink: 0; }
+
+    /* ════════════════════════════════════════════════
+       HERO — SEG 1
+    ════════════════════════════════════════════════ */
+    #inicio {
+      min-height: 100vh; padding-top: 60px;
+      background: linear-gradient(160deg, var(--blue-dark) 0%, var(--blue) 65%, #1a3a8a 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    #inicio::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--white)); pointer-events: none;
+    }
+    /* Blob decorativo */
+    #inicio::before {
+      content: ''; position: absolute; top: -80px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(107,70,193,0.25) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr;
+      gap: 0; padding: 48px 24px 100px;
+      max-width: 960px; margin: 0 auto; width: 100%;
+    }
+    @media (min-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr 1fr; align-items: center; padding: 80px 40px 120px; gap: 48px; }
+    }
+
+    .hero-content {}
+    .hero-location {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--yellow); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px;
+      background: rgba(246,200,159,0.12); padding: 6px 14px; border-radius: 20px;
+    }
+    .hero-headline {
+      font-family: var(--font-display); font-size: clamp(34px,6vw,52px);
+      line-height: 1.1; color: var(--white); margin-bottom: 18px; font-weight: 800;
+    }
+    .hero-headline .accent { color: var(--yellow); font-style: italic; }
+    .hero-sub { color: rgba(255,255,255,0.75); font-size: 15px; margin-bottom: 32px; max-width: 420px; line-height: 1.7; }
+    .hero-search {
+      display: flex; gap: 8px; margin-bottom: 40px;
+      background: rgba(255,255,255,0.1); border-radius: 14px; padding: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .hero-search input {
+      flex: 1; padding: 12px 14px;
+      background: transparent; border: none;
+      color: var(--white); font-family: var(--font-body); font-size: 14px; outline: none;
+    }
+    .hero-search input::placeholder { color: rgba(255,255,255,0.45); }
+    .hero-search button {
+      padding: 12px 20px; background: var(--green); border: none; border-radius: 10px;
+      color: white; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .hero-search button:hover { background: var(--green-light); }
+    /* Botón CTA hero — reemplaza la barra de búsqueda del hero */
+    .hero-cta-btn {
+      display: inline-block; margin-bottom: 40px;
+      padding: 16px 32px; background: var(--green);
+      color: var(--white); font-family: var(--font-display); font-size: 16px; font-weight: 800;
+      border: none; border-radius: 50px; cursor: pointer;
+      box-shadow: 0 4px 24px rgba(56,124,124,0.45);
+      transition: all 0.25s; letter-spacing: 0.01em;
+    }
+    .hero-cta-btn:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(56,124,124,0.55); }
+    .hero-stats { display: flex; gap: 24px; flex-wrap: wrap; }
+    .hero-stat { text-align: left; }
+    .hero-stat-num { font-family: var(--font-display); font-size: 26px; font-weight: 800; color: var(--white); line-height: 1; }
+    .hero-stat-label { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3px; }
+
+    /* ── IMAGEN HERO ──
+       Sección de imagen principal del hero.
+       Para reemplazar la imagen de placeholder:
+       1. Cambia src="" en el <img class="hero-img"> del HTML por la URL de tu imagen
+       2. Tamaño recomendado: 480×540px o mayor, formato WebP o JPG
+       3. Cambia opacity:0.6 a opacity:1 si quieres mostrarla con toda la intensidad
+       La clase .hero-img-wrap controla el contenedor de la imagen.
+    ── */
+    .hero-img-wrap {
+      display: flex;
+      align-items: center; justify-content: center;
+    }
+    @media (min-width: 768px) { .hero-img-wrap { display: flex; } }
+    .hero-img-placeholder {
+      width: 100%; max-width: 380px; height: 380px;
+      border-radius: 24px; background: rgba(255,255,255,0.06);
+      border: 2px dashed rgba(255,255,255,0.2);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.35); font-size: 13px; gap: 8px;
+    }
+    .hero-img-placeholder .ph-icon { font-size: 48px; }
+    /* Cuando tengas imagen: <img class="hero-img" src="TU_IMAGEN.jpg" alt="Terapia"> */
+    /* → .hero-img estilos en bloque IMÁGENES al final del CSS */
+
+    /* ════════════════════════════════════════════════
+       SECCIONES BASE
+    ════════════════════════════════════════════════ */
+    .section { padding: clamp(48px,8vw,80px) clamp(20px,4vw,40px); max-width: 1100px; margin: 0 auto; }
+    .section-wrap { width: 100%; }
+    .section-wrap.alt { background: var(--gray-light); }
+    .section-wrap.dark { background: var(--blue-dark); }
+    .section-wrap.green { background: var(--green); }
+
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+    .section-wrap.dark .section-label, .section-wrap.green .section-label { color: var(--yellow); }
+    .section-title { font-family: var(--font-display); font-size: clamp(22px,4vw,34px); font-weight: 800; line-height: 1.15; margin-bottom: 12px; color: var(--blue-dark); }
+    .section-wrap.dark .section-title, .section-wrap.green .section-title { color: var(--white); }
+    .section-body { font-size: 14px; color: var(--gray-text); line-height: 1.75; }
+    .section-wrap.dark .section-body, .section-wrap.green .section-body { color: rgba(255,255,255,0.75); }
+
+    /* ════════════════════════════════════════════════
+       SEG 2 — ESPECIALISTAS (scroll horizontal)
+    ════════════════════════════════════════════════ */
+    #especialistas { scroll-margin-top: 60px; }
+    .specialists-scroll {
+      display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 8px 0 16px; margin-top: 24px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .specialists-scroll::-webkit-scrollbar { height: 4px; }
+    .specialists-scroll::-webkit-scrollbar-track { background: var(--gray-mid); border-radius: 2px; }
+    .specialists-scroll::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+    .specialist-card {
+      min-width: 260px; max-width: 280px; border-radius: var(--radius);
+      background: var(--white); border: 1px solid var(--gray-mid);
+      box-shadow: var(--shadow-sm); scroll-snap-align: start;
+      overflow: hidden; flex-shrink: 0; transition: all 0.25s;
+    }
+    .specialist-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .specialist-card-header {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+      padding: 20px; display: flex; align-items: center; gap: 12px;
+    }
+    /* ── IMAGEN PERFIL ESPECIALISTA ──
+       Para cada especialista, reemplaza el contenido del div .specialist-avatar
+       por una etiqueta <img> con la foto real:
+         <img src="foto-del-especialista.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+       Tamaño recomendado: 100×100px mínimo, formato JPG o WebP, recortada en círculo.
+       El div .specialist-avatar actualmente muestra las iniciales como fallback.
+    ── */
+    .specialist-avatar {
+      width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0;
+      background: var(--green); display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 18px; color: var(--white);
+      font-weight: 800; border: 2px solid rgba(255,255,255,0.3);
+      overflow: hidden;
+    }
+    .specialist-name { font-family: var(--font-display); font-size: 14px; color: var(--white); line-height: 1.2; font-weight: 700; }
+    .specialist-role { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+    .specialist-badge {
+      margin-left: auto; flex-shrink: 0;
+      background: var(--yellow); color: var(--black);
+      font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 20px;
+      letter-spacing: 0.06em;
+    }
+    .specialist-body { padding: 16px; }
+    .spec-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 12px; }
+    .spec-label { color: var(--gray-text); font-weight: 500; }
+    .spec-value { color: var(--black); font-weight: 700; }
+    .spec-tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0; }
+    .spec-tag { background: var(--gray-light); color: var(--blue); font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .spec-divider { height: 1px; background: var(--gray-mid); margin: 10px 0; }
+    .spec-hours { font-size: 11px; color: var(--gray-text); }
+    .spec-contact-btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      width: 100%; padding: 11px; border-radius: var(--radius-sm);
+      background: var(--green); color: var(--white);
+      font-size: 13px; font-weight: 700; border: none; cursor: pointer;
+      transition: all 0.2s; margin-top: 8px;
+      text-shadow: 0 0 12px rgba(255,255,255,0.2);
+    }
+    .spec-contact-btn:hover { background: var(--green-light); text-shadow: 0 0 16px rgba(255,255,255,0.35); }
+
+    /* ════════════════════════════════════════════════
+       SEG 3 — BÚSQUEDA DE ATENCIÓN
+    ════════════════════════════════════════════════ */
+    #atencion { scroll-margin-top: 60px; }
+    .search-attention-bar {
+      display: flex; gap: 8px; margin: 20px 0;
+      background: var(--gray-bg); border-radius: 14px; padding: 6px;
+    }
+    .search-attention-bar input {
+      flex: 1; padding: 12px 14px;
+      background: var(--white); border: 1px solid var(--gray-mid);
+      border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 14px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-attention-bar input:focus { border-color: var(--blue); }
+    .search-attention-bar button {
+      padding: 12px 20px; background: var(--blue); color: var(--white);
+      border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .search-attention-bar button:hover { background: var(--blue-light); }
+    #attention-results { margin-top: 16px; display: none; }
+    #attention-results.visible { display: block; }
+    .attention-result-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 15px; margin-bottom: 10px;
+      background: var(--white); border-radius: 13px;
+      border: 1px solid var(--gray-mid); box-shadow: var(--shadow-sm);
+      animation: fadeSlide 0.3s ease both;
+    }
+    @keyframes fadeSlide { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .ar-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--blue); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 15px; color: white; font-weight: 800; }
+    .ar-info { flex: 1; }
+    .ar-name { font-size: 14px; font-weight: 700; color: var(--black); }
+    .ar-spec { font-size: 12px; color: var(--gray-text); }
+    .ar-match { background: var(--green); color: white; font-size: 10px; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: none; cursor: pointer; white-space: nowrap; }
+    .no-results { text-align: center; color: var(--gray-text); font-size: 14px; padding: 24px; background: var(--gray-bg); border-radius: var(--radius-sm); }
+
+    /* ════════════════════════════════════════════════
+       SEG 4 — SERVICIOS
+    ════════════════════════════════════════════════ */
+    #servicios { scroll-margin-top: 60px; }
+    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 24px; }
+    @media (min-width: 600px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 900px) { .services-grid { grid-template-columns: repeat(6, 1fr); } }
+    .service-item { text-align: center; padding: 14px 6px; }
+    /* ── ICONO SERVICIO ──
+       Cada .service-circle contiene un emoji como ícono visual.
+       Para reemplazarlo por una imagen real:
+         1. Agrega <img src="icono-servicio.svg" style="width:52px;height:52px;object-fit:contain;">
+            dentro del div .service-circle
+         2. Elimina el texto emoji del div
+         3. Tamaño recomendado: 64×64px, formato SVG o PNG con fondo transparente
+    ── */
+    .service-circle {
+      width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 10px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; box-shadow: var(--shadow-sm);
+      border: 3px solid rgba(56,124,124,0.3); transition: transform 0.25s;
+    }
+    .service-item:hover .service-circle { transform: scale(1.07); }
+    .service-name { font-family: var(--font-display); font-size: 13px; color: var(--blue-dark); font-weight: 700; }
+
+    /* ════════════════════════════════════════════════
+       SEG 5 — GUÍA DE USO
+    ════════════════════════════════════════════════ */
+    #guia { scroll-margin-top: 60px; }
+    .steps-list { margin-top: 24px; }
+    .step-item { display: flex; align-items: flex-start; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--gray-mid); }
+    .step-item:last-child { border-bottom: none; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; background: var(--green); color: var(--white); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 17px; font-weight: 800; }
+    .step-title { font-weight: 700; font-size: 15px; color: var(--black); margin-bottom: 3px; }
+    .step-desc { font-size: 13px; color: var(--gray-text); line-height: 1.6; }
+
+    /* ════════════════════════════════════════════════
+       SEG 6 — COMENTARIOS
+    ════════════════════════════════════════════════ */
+    #comentarios { scroll-margin-top: 60px; }
+    .reviews-scroll {
+      display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 8px 0 16px; margin-top: 20px; -webkit-overflow-scrolling: touch;
+    }
+    .reviews-scroll::-webkit-scrollbar { height: 4px; }
+    .reviews-scroll::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+    .review-card { min-width: 260px; background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-mid); padding: 24px; scroll-snap-align: start; box-shadow: var(--shadow-sm); flex-shrink: 0; min-height: 192px; }
+    .review-stars { color: var(--green); font-size: 15px; margin-bottom: 10px; }
+    .review-text { font-size: 13px; color: var(--gray-text); line-height: 1.65; margin-bottom: 14px; font-style: italic; }
+    .review-author { display: flex; align-items: center; gap: 10px; }
+    /* ── AVATAR RESEÑA ──
+       El div .review-avatar muestra la inicial del nombre como fallback.
+       Para mostrar una foto real, agrega dentro del div:
+         <img src="foto-usuario.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+       Tamaño recomendado: 40×40px o mayor.
+    ── */
+    .review-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--green)); display: flex; align-items: center; justify-content: center; font-size: 13px; color: white; font-weight: 800; overflow: hidden; }
+    .review-name { font-size: 13px; font-weight: 700; color: var(--black); }
+    .review-location { font-size: 11px; color: var(--gray-text); }
+
+    /* ════════════════════════════════════════════════
+       SEG 7 — RECOMENDACIÓN
+    ════════════════════════════════════════════════ */
+    #recomendacion { scroll-margin-top: 60px; }
+    .why-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    @media (min-width: 640px) { .why-grid { display: grid; grid-template-columns: 1fr 1fr; } }
+    .why-item { display: flex; align-items: flex-start; gap: 12px; padding: 16px; background: var(--white); border-radius: var(--radius-sm); border-left: 4px solid var(--blue); box-shadow: var(--shadow-sm); }
+    .why-icon { font-size: 22px; flex-shrink: 0; }
+    .why-title { font-weight: 700; font-size: 14px; margin-bottom: 3px; color: var(--blue-dark); }
+    .why-desc { font-size: 12px; color: var(--gray-text); line-height: 1.6; }
+
+    /* ════════════════════════════════════════════════
+       SEG 8 — ESPECIALIZACIÓN
+    ════════════════════════════════════════════════ */
+    #especializacion { scroll-margin-top: 60px; }
+    .spec-models { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .spec-model-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(255,255,255,0.07); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+    .spec-model-name { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.92); }
+    .spec-model-desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+    /* ════════════════════════════════════════════════
+       SEG 9 — EDUCACIÓN
+    ════════════════════════════════════════════════ */
+    #educacion { scroll-margin-top: 60px; }
+    .institutions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
+    @media (min-width: 640px) { .institutions-grid { grid-template-columns: repeat(6, 1fr); } }
+    .institution-badge { background: var(--white); border-radius: 12px; padding: 14px 8px; text-align: center; border: 1px solid var(--gray-mid); box-shadow: var(--shadow-sm); }
+    /* ── ICONO INSTITUCIÓN ──
+       El .institution-icon muestra un emoji. Para una imagen real:
+         <img src="logo-institucion.png" style="width:32px;height:32px;object-fit:contain;margin:0 auto 4px;">
+       Tamaño recomendado: 64×32px o mayor, formato SVG/PNG transparente.
+    ── */
+    .institution-icon { font-size: 26px; margin-bottom: 5px; }
+    .institution-name { font-size: 10px; font-weight: 700; color: var(--blue-dark); letter-spacing: 0.04em; line-height: 1.3; }
+
+    /* ════════════════════════════════════════════════
+       SEG 10 — MÉTODOS DE PAGO
+    ════════════════════════════════════════════════ */
+    #pagos { scroll-margin-top: 60px; }
+    .payment-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0; }
+    @media (min-width: 640px) { .payment-methods { grid-template-columns: repeat(6, 1fr); } }
+    .pay-method { background: var(--white); border-radius: 10px; padding: 12px 6px; text-align: center; border: 2px solid var(--gray-mid); font-size: 11px; font-weight: 700; color: var(--gray-text); transition: border-color 0.2s; }
+    .pay-method:hover { border-color: var(--blue); }
+    /* ── ICONO MÉTODO DE PAGO ──
+       Reemplaza el emoji por el logo oficial del método de pago:
+         <img src="visa-logo.svg" style="width:40px;height:24px;object-fit:contain;margin:0 auto 5px;">
+       Tamaño recomendado: 80×48px, formato SVG.
+    ── */
+    .pay-method-icon { font-size: 20px; margin-bottom: 5px; }
+    .payment-note { background: var(--gray-bg); border-radius: 12px; padding: 16px; font-size: 13px; color: var(--gray-text); line-height: 1.65; border-left: 4px solid var(--blue); margin-top: 14px; }
+
+    /* ════════════════════════════════════════════════
+       SEG 11 — GARANTÍA
+    ════════════════════════════════════════════════ */
+    #garantia { scroll-margin-top: 60px; }
+    .guarantee-visual { text-align: center; padding: 28px 0; }
+    .guarantee-circle {
+      width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 20px;
+      background: conic-gradient(var(--green) 0% 97%, var(--gray-mid) 97% 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;
+    }
+    .guarantee-circle::before { content: ''; position: absolute; inset: 12px; border-radius: 50%; background: var(--white); }
+    .guarantee-num { position: relative; z-index: 1; font-family: var(--font-display); font-size: 36px; color: var(--blue-dark); line-height: 1; font-weight: 800; }
+    .guarantee-unit { position: relative; z-index: 1; font-size: 12px; color: var(--gray-text); font-weight: 600; }
+    .guarantee-label { font-size: 14px; color: var(--gray-text); font-weight: 500; }
+    .guarantee-features { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .guarantee-feat { display: flex; align-items: center; gap: 12px; padding: 13px 14px; background: var(--gray-light); border-radius: 10px; }
+    .guarantee-feat-text { font-size: 13px; font-weight: 600; color: var(--black); }
+
+    /* ════════════════════════════════════════════════
+       SEG 12 — FUNCIONES (acordeón)
+    ════════════════════════════════════════════════ */
+    #funciones { scroll-margin-top: 60px; }
+    .functions-accordion { margin-top: 20px; }
+    .faq-item { border-bottom: 1px solid var(--gray-mid); overflow: hidden; }
+    .faq-question { display: flex; align-items: center; justify-content: space-between; padding: 16px 2px; cursor: pointer; font-weight: 700; font-size: 14px; color: var(--black); gap: 8px; }
+    .faq-question:hover { color: var(--blue); }
+    .faq-arrow { font-size: 14px; transition: transform 0.3s; flex-shrink: 0; color: var(--green); }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-item.open .faq-answer { max-height: 400px; }
+    .faq-answer-inner { padding: 0 2px 16px; font-size: 13px; color: var(--gray-text); line-height: 1.7; }
+    .condition-tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .condition-tag { background: var(--gray-bg); color: var(--blue); font-size: 12px; font-weight: 700; padding: 5px 13px; border-radius: 20px; border: 1px solid rgba(0,74,173,0.12); }
+
+    /* ════════════════════════════════════════════════
+       SEG 13 — FAQ
+    ════════════════════════════════════════════════ */
+    #faq { scroll-margin-top: 60px; }
+
+    /* ════════════════════════════════════════════════
+       SEG 14+15 — FOOTER
+    ════════════════════════════════════════════════ */
+    #enlaces { scroll-margin-top: 60px; }
+    .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 32px; }
+    @media (min-width: 640px) { .footer-grid { grid-template-columns: repeat(3, 1fr); } }
+    .footer-links-title { font-weight: 800; font-size: 11px; color: rgba(255,255,255,0.9); margin-bottom: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .footer-link-item { display: block; padding: 7px 0; color: rgba(255,255,255,0.6); font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.2s; cursor: pointer; }
+    .footer-link-item:hover { color: var(--yellow); }
+    .footer-contact-btn { display: inline-block; padding: 11px 22px; background: transparent; border: 2px solid rgba(255,255,255,0.35); color: white; border-radius: 50px; font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: 0.08em; transition: all 0.2s; margin-top: 6px; }
+    .footer-contact-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+    .social-row { display: flex; gap: 14px; justify-content: center; margin: 24px 0; }
+    /* ── ICONO RED SOCIAL ──
+       Cada .social-btn tiene un ícono de texto. Para usar SVG oficiales:
+         <img src="icon-facebook.svg" style="width:22px;height:22px;filter:brightness(0)invert(1);">
+       Los href="" se deben reemplazar con los links reales de tus redes.
+    ── */
+    .social-btn { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: rgba(255,255,255,0.1); transition: all 0.25s; cursor: pointer; border: 1px solid rgba(255,255,255,0.18); text-decoration: none; color: white; }
+    .social-btn:hover { background: rgba(56,124,124,0.4); transform: translateY(-3px); }
+    .copyright { text-align: center; font-size: 11px; color: rgba(255,255,255,0.3); padding: 18px 0 28px; border-top: 1px solid rgba(255,255,255,0.08); line-height: 1.8; }
+
+    /* ════════════════════════════════════════════════
+       BOTÓN SOS (fijo, inferior derecho)
+    ════════════════════════════════════════════════ */
+    #sos-btn {
+      position: fixed; bottom: 88px; right: 20px; z-index: 900;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, #e0185e, #c0134e);
+      border: none; cursor: pointer;
+      color: white; box-shadow: 0 4px 18px rgba(224,24,94,0.5);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: all 0.25s; line-height: 1;
+      animation: pulse-sos 2.5s ease-in-out infinite;
+    }
+    #sos-btn:hover { transform: scale(1.1); }
+    #sos-btn .sos-icon { font-size: 22px; }
+    @keyframes pulse-sos { 0%,100%{box-shadow:0 4px 18px rgba(224,24,94,0.5);} 50%{box-shadow:0 4px 28px rgba(224,24,94,0.8),0 0 0 7px rgba(224,24,94,0.12);} }
+
+    /* ════════════════════════════════════════════════
+       BOTÓN WHATSAPP (fijo, inferior — encima del SOS)
+    ════════════════════════════════════════════════ */
+    /* ── BOTÓN WHATSAPP ──
+       El número de WhatsApp se configura en el atributo href del elemento #whatsapp-btn.
+       Reemplaza "5216141000000" con tu número en formato internacional: 52 (México) + número.
+       Ejemplo: href="https://wa.me/5216141234567"
+    ── */
+    #whatsapp-btn {
+      position: fixed; bottom: 24px; right: 20px; z-index: 900;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25d366; border: none; cursor: pointer;
+      color: white; box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; text-decoration: none;
+      transition: all 0.25s;
+    }
+    #whatsapp-btn:hover { transform: scale(1.1); background: #1ebe5d; }
+
+    /* ════════════════════════════════════════════════
+       MODAL AVISO DE PRIVACIDAD
+    ════════════════════════════════════════════════ */
+    #privacy-modal {
+      position: fixed; inset: 0; z-index: 3000;
+      background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+      display: flex; align-items: flex-end;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    #privacy-modal.open { opacity: 1; pointer-events: all; }
+    .privacy-sheet {
+      background: var(--white); border-radius: 24px 24px 0 0;
+      padding: 28px 24px 48px; width: 100%; max-width: 640px; margin: 0 auto;
+      transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+      max-height: 80vh; overflow-y: auto; position: relative;
+    }
+    #privacy-modal.open .privacy-sheet { transform: translateY(0); }
+    .privacy-sheet h2 { font-family: var(--font-display); font-size: 20px; color: var(--blue); margin-bottom: 14px; font-weight: 800; }
+    .privacy-sheet p { font-size: 13px; color: var(--gray-text); line-height: 1.7; margin-bottom: 10px; }
+    .privacy-close { position: absolute; top: 18px; right: 18px; background: var(--gray-light); border: none; border-radius: 50%; width: 34px; height: 34px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+
+    /* ════════════════════════════════════════════════
+       PESTAÑA DE USUARIOS
+    ════════════════════════════════════════════════ */
+    #view-user { display: none; background: var(--gray-light); min-height: 100vh; padding-top: 60px; }
+    #view-user.active { display: block; }
+
+    .user-header {
+      background: var(--blue); padding: 28px 20px 60px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    /* ── FOTO DE PERFIL (PESTAÑA USUARIO) ──
+       El .user-avatar-big muestra iniciales como fallback.
+       Para mostrar la foto de Google del usuario logueado,
+       reemplaza el contenido por: <img src="URL_FOTO_GOOGLE" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+       La URL viene del objeto de sesión de Google: user.photoURL
+       Tamaño recomendado: 72×72px o mayor.
+    ── */
+    .user-avatar-big {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--green); border: 3px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 28px; font-weight: 800;
+      color: white; flex-shrink: 0; overflow: hidden;
+    }
+    .user-info-name { font-family: var(--font-display); font-size: 20px; font-weight: 800; color: white; }
+    .user-info-email { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+    .user-info-badge { margin-top: 6px; display: inline-block; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+
+    .user-menu-wrap {
+      margin: -32px 16px 0; background: var(--white);
+      border-radius: var(--radius); box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .user-menu-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 20px; border-bottom: 1px solid var(--gray-mid);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .user-menu-item:last-child { border-bottom: none; }
+    .user-menu-item:hover { background: var(--gray-light); }
+    .user-menu-icon {
+      width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .icon-blue { background: rgba(0,74,173,0.1); }
+    .icon-green { background: rgba(56,124,124,0.1); }
+    .icon-purple { background: rgba(107,70,193,0.1); }
+    .icon-yellow { background: rgba(246,200,159,0.25); }
+    .user-menu-text {}
+    .user-menu-title { font-size: 14px; font-weight: 700; color: var(--black); }
+    .user-menu-desc { font-size: 12px; color: var(--gray-text); margin-top: 1px; line-height: 1.4; }
+    .user-menu-arrow { margin-left: auto; color: var(--gray-text); font-size: 14px; }
+
+    /* Subpestañas de usuario */
+    .user-subview { display: none; }
+    .user-subview.active { display: block; }
+
+    .subview-header {
+      background: var(--white); padding: 16px 20px; border-bottom: 1px solid var(--gray-mid);
+      display: flex; align-items: center; gap: 12px; position: sticky; top: 60px; z-index: 100;
+    }
+    .subview-back { background: none; border: none; cursor: pointer; font-size: 18px; color: var(--blue); padding: 4px; }
+    .subview-title { font-family: var(--font-display); font-size: 18px; font-weight: 800; color: var(--blue-dark); }
+    .subview-content { padding: 20px; max-width: 700px; }
+    .subview-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-mid); box-shadow: var(--shadow-sm); padding: 20px; margin-bottom: 14px; }
+    .subview-card h3 { font-family: var(--font-display); font-size: 16px; font-weight: 800; color: var(--blue-dark); margin-bottom: 8px; }
+    .subview-card p { font-size: 13px; color: var(--gray-text); line-height: 1.65; }
+    .form-field { margin-bottom: 16px; }
+    .form-label { font-size: 12px; font-weight: 700; color: var(--black); margin-bottom: 6px; display: block; }
+    .form-input {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--gray-mid); border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color 0.2s;
+      background: var(--white);
+    }
+    .form-input:focus { border-color: var(--blue); }
+    .form-input:disabled { background: var(--gray-light); color: var(--gray-text); }
+    .btn-save { background: var(--blue); color: white; border: none; padding: 13px 28px; border-radius: 50px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-save:hover { background: var(--blue-light); }
+    .btn-danger { background: transparent; color: #e0185e; border: 2px solid #e0185e; padding: 11px 24px; border-radius: 50px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-danger:hover { background: #e0185e; color: white; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--gray-mid); font-size: 13px; }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { color: var(--gray-text); font-weight: 500; }
+    .info-val { color: var(--black); font-weight: 600; }
+    .privacy-toggle { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--gray-mid); }
+    .privacy-toggle:last-child { border-bottom: none; }
+    .toggle-label { font-size: 13px; font-weight: 600; color: var(--black); }
+    .toggle-desc { font-size: 11px; color: var(--gray-text); margin-top: 2px; }
+    .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; inset: 0; background: var(--gray-mid); border-radius: 24px; cursor: pointer; transition: 0.3s; }
+    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s; }
+    .toggle-switch input:checked + .toggle-slider { background: var(--blue); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+    /* ════════════════════════════════════════════════
+       BOTONES BASE
+    ════════════════════════════════════════════════ */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 50px; font-family: var(--font-body); font-size: 14px; font-weight: 700; cursor: pointer; border: none; transition: all 0.25s; }
+    .btn-primary { background: var(--blue); color: var(--white); }
+    .btn-primary:hover { background: var(--blue-light); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .btn-green { background: var(--green); color: var(--white); }
+    .btn-green:hover { background: var(--green-light); }
+
+    /* ════════════════════════════════════════════════
+       RESPONSIVE — Ajustes globales
+    ════════════════════════════════════════════════ */
+    @media (min-width: 768px) {
+      .spec-models { display: grid; grid-template-columns: 1fr 1fr; }
+      .guarantee-features { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+    /* ════════════════════════════════════════════════
+       IMÁGENES — Estilos para todos los elementos con imagen
+       Compatible con cualquier resolución o tamaño de imagen
+    ════════════════════════════════════════════════ */
+
+    /* ── IMAGEN HERO (480×540px o mayor) ── */
+    .hero-img {
+      width: 100%; max-width: 380px;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 480 / 540;
+    }
+
+    /* ── LOGO SPLASH (96×96px) ── */
+    .splash-logo-img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ── LOGO NAVBAR (36×36px) ── */
+    .nav-logo-img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ── SERVICIOS (64×64px recomendado) ── */
+    .service-img {
+      width: 54px; height: 54px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── ESPECIALISTAS (100×100px mínimo) ── */
+    .specialist-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* ── INSTITUCIONES EDUCATIVAS (64×32px o mayor) ── */
+    .institution-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 8px;
+      min-height: 68px;
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--gray-mid);
+      box-shadow: var(--shadow-sm);
+    }
+    .institution-img {
+      width: auto;
+      max-width: 100%;
+      max-height: 44px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── MÉTODOS DE PAGO (80×48px recomendado) ── */
+    .pay-method {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 6px;
+      min-height: 64px;
+      background: var(--white);
+      border-radius: 10px;
+      border: 2px solid var(--gray-mid);
+      transition: border-color 0.2s;
+    }
+    .pay-method:hover { border-color: var(--blue); }
+    .pay-img {
+      width: auto;
+      max-width: 68px;
+      max-height: 40px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── REDES SOCIALES (22×22px) ── */
+    .social-img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ── BOTONES SOS / WHATSAPP ── */
+    #sos-btn img, #whatsapp-btn img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ── RESPONSIVE HERO ── */
+    @media (max-width: 767px) {
+      .hero-img-wrap { display: flex; justify-content: center; margin-top: 24px; }
+      .hero-img { max-width: 88vw; aspect-ratio: 480 / 540; }
+    }
+
+    /* Regla base — ninguna imagen se desborda ni pierde proporción */
+    img { max-width: 100%; height: auto; }
+
+    /* ════════════════════════════════════════════════
+       RESPONSIVE MEJORADO
+    ════════════════════════════════════════════════ */
+    @media (max-width: 480px) {
+      .institutions-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .payment-methods    { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .institution-badge  { padding: 8px 4px; min-height: 54px; }
+      .institution-img    { max-height: 32px; }
+      .pay-method         { padding: 8px 4px; min-height: 54px; }
+      .pay-img            { max-width: 52px; max-height: 30px; }
+      .service-circle     { width: 72px; height: 72px; }
+      .service-img        { width: 40px; height: 40px; }
+      .specialist-card    { min-width: 240px; }
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      .institutions-grid { grid-template-columns: repeat(3, 1fr); }
+      .payment-methods   { grid-template-columns: repeat(3, 1fr); }
+      .institution-img   { max-height: 38px; }
+      .pay-img           { max-width: 60px; max-height: 36px; }
+    }
+    @media (min-width: 1024px) {
+      .specialist-card { min-width: 280px; }
+      .hero-img        { max-width: 460px; }
+      .institution-img { max-height: 52px; }
+      .pay-img         { max-width: 72px; max-height: 44px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     SPLASH SCREEN — Pantalla de bienvenida
+     Se muestra al cargar la app. El usuario puede:
+     1. Iniciar sesión con Google
+     2. Continuar como visitante
+════════════════════════════════════════════════ -->
+<div id="splash">
+  <div class="splash-logo-wrap">
+    <div class="splash-logo-circle">
+      <!-- ── IMAGEN LOGO SPLASH ──
+           Reemplaza src="" con la URL de tu logo real.
+           Cuando tengas la imagen, cambia display:none a display:block en .splash-logo-img (CSS)
+           y elimina o cambia display:none del .splash-logo-fallback.
+      ── -->
+      <img class="splash-logo-img" src="public/images/pprincipal.png" alt="Línea Contigo" />
+      <span class="splash-logo-fallback" style="display:none">LC</span>
+    </div>
+    <div>
+      <div class="splash-app-name">Línea Contigo</div>
+      <div class="splash-app-sub">Delicias · Meoqui · Chih.</div>
+    </div>
+  </div>
+
+  <div class="splash-divider"></div>
+
+  <!-- Botón Google Sign-In -->
+  <button class="splash-google-btn" onclick="signInGoogle()">
+    <div class="google-icon"></div>
+    Continuar con Google
+  </button>
+
+  <!-- Botón Visitante -->
+  <button class="splash-visitor-btn" onclick="enterAsVisitor()">
+    👤 &nbsp;Entrar como Visitante
+  </button>
+
+  <p class="splash-privacy-note">
+    Al ingresar aceptas nuestros
+    <span style="color:var(--yellow);cursor:pointer;text-decoration:underline" onclick="openPrivacyFromSplash()">Términos y Aviso de Privacidad</span>.
+    Tu información está protegida.
+  </p>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     NAVBAR — Fija en la parte superior
+════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <!-- Logo — Click regresa al inicio -->
+  <a class="nav-logo" onclick="navTo('inicio'); showView('main')" href="javascript:void(0)">
+    <div class="nav-logo-img-wrap">
+      <!-- ── IMAGEN LOGO NAVBAR ──
+           Reemplaza src="" con la URL de tu logo.
+           Cambia display:none a display:block en .nav-logo-img (CSS).
+      ── -->
+      <img class="nav-logo-img" src="public/images/logo.png" alt="Logo" />
+      <span class="nav-logo-fallback" style="display:none">LC</span>
+    </div>
+    <div>
+      <div class="nav-logo-text">Línea Contigo</div>
+      <div class="nav-logo-sub">Delicias · Chihuahua</div>
+    </div>
+  </a>
+
+  <div class="nav-right">
+    <!-- Botón usuario — FUNCIÓN DESHABILITADA TEMPORALMENTE (V3)
+         TODO: Habilitar onclick="showView('user')" cuando la pestaña de usuario esté lista -->
+    <button class="nav-user-btn" title="Mi cuenta (próximamente)" style="cursor:default;opacity:0.6">
+      <img class="nav-user-avatar" id="nav-avatar-img" src="" alt="" />
+      <span class="nav-user-icon" id="nav-user-icon">👤</span>
+    </button>
+    <!-- Botón menú hamburguesa -->
+    <button class="nav-menu-btn" id="menu-toggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════
+     BARRA RÁPIDA — Menú lateral
+════════════════════════════════════════════════ -->
+<div id="quick-nav-overlay"></div>
+<div id="quick-nav-panel">
+  <button class="qnav-close" id="qnav-close">✕</button>
+  <div class="qnav-title">Navegación</div>
+  <div class="qnav-items">
+    <div class="qnav-section-label">Principal</div>
+    <div class="qnav-item" onclick="navTo('inicio'); showView('main')"><span class="qnav-bullet">•</span> Inicio</div>
+    <div class="qnav-item" onclick="navTo('especialistas'); showView('main')"><span class="qnav-bullet">•</span> Especialistas</div>
+    <div class="qnav-item" onclick="navTo('servicios'); showView('main')"><span class="qnav-bullet">•</span> Servicios</div>
+    <div class="qnav-item" onclick="navTo('atencion'); showView('main')"><span class="qnav-bullet">•</span> Buscar Atención</div>
+    <div class="qnav-item" onclick="navTo('guia'); showView('main')"><span class="qnav-bullet">•</span> Cómo Usar</div>
+    <div class="qnav-item" onclick="navTo('faq'); showView('main')"><span class="qnav-bullet">•</span> Preguntas Frecuentes</div>
+    <div class="qnav-section-label">Mi Cuenta</div>
+    <!-- TODO V4: Habilitar showView('user') cuando la pestaña de usuario esté integrada -->
+    <div class="qnav-item" style="opacity:0.45;cursor:default" title="Próximamente disponible"><span class="qnav-bullet">•</span> Mi Perfil <span style="font-size:10px;margin-left:6px;color:var(--yellow)">(próximamente)</span></div>
+    <div class="qnav-section-label">Legal</div>
+    <div class="qnav-item" onclick="openPrivacy()"><span class="qnav-bullet">•</span> Aviso de Privacidad</div>
+    <div class="qnav-item" onclick="navTo('redes'); showView('main')"><span class="qnav-bullet">•</span> Redes Sociales</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     VISTA PRINCIPAL
+════════════════════════════════════════════════ -->
+<div id="view-main" class="view active">
+
+  <!-- ── SEG 1: HERO ── -->
+  <section id="inicio">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-location">📍 Delicias &amp; Meoqui, Chih.</div>
+        <h1 class="hero-headline">
+          Encuentra tu<br>
+          <span class="accent">especialista</span><br>
+          de salud mental
+        </h1>
+        <p class="hero-sub">
+          En Línea Contigo encontrarás psicólogos y terapeutas que te apoyarán en tu crecimiento personal para superar los obstáculos que te impiden tener una vida plena y feliz.
+        </p>
+        <!-- Botón CTA principal — lleva al segmento de búsqueda de especialistas -->
+        <button class="hero-cta-btn" onclick="document.getElementById('atencion').scrollIntoView({behavior:'smooth'})">
+          Buscar Especialistas de Salud
+        </button>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label">Especialistas</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label">Especialidades</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">2</div><div class="hero-stat-label">Municipios</div></div>
+        </div>
+      </div>
+
+      <!-- Imagen hero — desktop -->
+      <div class="hero-img-wrap">
+        <!-- ── IMAGEN HERO ──
+             Opción A: Usa el placeholder con dashed border (ya visible).
+             Opción B: Cuando tengas una imagen real:
+               1. Elimina el div .hero-img-placeholder
+               2. Agrega: <img class="hero-img" src="tu-imagen.jpg" alt="Terapia psicológica" style="display:block">
+               3. Tamaño recomendado: 480×480px, WebP/JPG, tema: sesión terapéutica o bienestar
+        ── -->
+        <div class="hero-img-placeholder" style="display:none">
+          <span class="ph-icon">🖼️</span>
+          <span>Imagen principal aquí</span>
+          <span style="font-size:11px;opacity:0.6">480×480px recomendado</span>
+        </div>
+        <img class="hero-img" src="public/images/psico.png" alt="Terapia psicológica" style="display:block">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SEG 2: ESPECIALISTAS ── -->
+  <div class="section-wrap">
+    <div class="section">
+      <div id="especialistas">
+        <div class="section-label">Directorio</div>
+        <h2 class="section-title">Nuestros Especialistas</h2>
+        <p class="section-body">Conoce a los profesionales verificados que ofrecen sus servicios en Delicias y Meoqui.</p>
+        <div class="specialists-scroll" id="specialists-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 3: BÚSQUEDA DE ATENCIÓN ── -->
+  <div class="section-wrap alt">
+    <div class="section">
+      <div id="atencion">
+        <div class="section-label">Búsqueda Inteligente</div>
+        <h2 class="section-title">Busca la Atención que Necesitas</h2>
+        <p class="section-body">Ingresa tus síntomas, condición o tipo de terapia y encontraremos al especialista ideal.</p>
+        <div class="search-attention-bar">
+          <input type="text" id="attention-input" placeholder="Ej: depresión, ansiedad social, TCC..." />
+          <button onclick="searchAttention()">Buscar</button>
+        </div>
+        <div id="attention-results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 4: SERVICIOS ── -->
+  <div class="section-wrap">
+    <div class="section">
+      <div id="servicios">
+        <div class="section-label">Oferta Terapéutica</div>
+        <h2 class="section-title">Conoce Nuestros Servicios</h2>
+        <div class="services-grid">
+          <!-- POSICIÓN 1: Terapia Individual → ./images/ainvididual.png -->
+          <div class="service-item"><div class="service-circle"><img src="public/images/ainvididual.png" alt="Terapia Individual" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Terapia Individual</div></div>
+          <!-- POSICIÓN 2: Terapia de Pareja → ./images/apareja.png -->
+          <div class="service-item"><div class="service-circle"><img src="public/images/apareja.png" alt="Terapia de Pareja" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Terapia de Pareja</div></div>
+          <!-- POSICIÓN 3: Psicología Infantil → ./images/aninos.png -->
+          <div class="service-item"><div class="service-circle"><img src="public/images/aninos.png" alt="Psicología Infantil" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Psicología Infantil</div></div>
+          <!-- POSICIÓN 4: Empoderamiento → ./images/empoderamiento.png -->
+          <div class="service-item"><div class="service-circle"><img src="public/images/empoderamiento.png" alt="Empoderamiento" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Empoderamiento</div></div>
+          <!-- POSICIÓN 5: Mindfulness → ./images/mindfulness.png -->
+          <div class="service-item"><div class="service-circle"><img src="public/images/mindfulness.png" alt="Mindfulness" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Mindfulness</div></div>
+          <!-- POSICIÓN 6: Tanatología → ./images/tanatologia.png -->
+          <div class="service-item"><div class="service-circle"><img src="public/images/tanatologia.png" alt="Tanatología" class="service-img" onerror="this.style.display='none'"></div><div class="service-name">Tanatología</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 5: GUÍA DE USO ── -->
+  <div class="section-wrap alt">
+    <div class="section">
+      <div id="guia">
+        <div class="section-label">Primeros Pasos</div>
+        <h2 class="section-title">¿Cómo Usar la Plataforma?</h2>
+        <div class="steps-list">
+          <div class="step-item"><div class="step-num">1</div><div><div class="step-title">Explora el directorio</div><div class="step-desc">Revisa los perfiles de nuestros especialistas y encuentra el que mejor se adapta a tus necesidades.</div></div></div>
+          <div class="step-item"><div class="step-num">2</div><div><div class="step-title">Contáctate directamente</div><div class="step-desc">Usa los datos de contacto del especialista para agendar tu primera cita en el horario que más te convenga.</div></div></div>
+          <div class="step-item"><div class="step-num">3</div><div><div class="step-title">¡Prepárate para tu sesión!</div><div class="step-desc">Tu sesión está por comenzar. El bienestar mental es una inversión en ti mismo.</div></div></div>
+        </div>
+        <br>
+        <button class="btn btn-primary" onclick="navTo('especialistas')">Ver Especialistas →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 6: COMENTARIOS ── -->
+  <div class="section-wrap">
+    <div class="section">
+      <div id="comentarios">
+        <div class="section-label">Testimonios</div>
+        <h2 class="section-title">Lo que Dicen Nuestros Usuarios</h2>
+        <div class="reviews-scroll" id="reviews-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 7: RECOMENDACIÓN ── -->
+  <div class="section-wrap alt">
+    <div class="section">
+      <div id="recomendacion">
+        <div class="section-label">¿Por qué elegirnos?</div>
+        <h2 class="section-title">Línea Contigo es la Mejor Opción</h2>
+        <div class="why-grid">
+          <div class="why-item"><div class="why-icon">📍</div><div><div class="why-title">Local y Cercano</div><div class="why-desc">Directorio exclusivo para Delicias y Meoqui. Conocemos las necesidades de nuestra comunidad.</div></div></div>
+          <div class="why-item"><div class="why-icon">✅</div><div><div class="why-title">Especialistas Verificados</div><div class="why-desc">Todos los profesionales cuentan con cédula profesional y formación acreditada.</div></div></div>
+          <div class="why-item"><div class="why-icon">🆓</div><div><div class="why-title">Acceso Gratuito</div><div class="why-desc">El directorio es de acceso libre. Sin suscripciones ni costos ocultos para los usuarios.</div></div></div>
+          <div class="why-item"><div class="why-icon">🔒</div><div><div class="why-title">Privacidad Garantizada</div><div class="why-desc">Tu información es confidencial. La conexión con el especialista es directa y privada.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 8: ESPECIALIZACIÓN ── -->
+  <div class="section-wrap dark">
+    <div class="section">
+      <div id="especializacion">
+        <div class="section-label">Formación Profesional</div>
+        <h2 class="section-title">Terapeutas Capacitados</h2>
+        <p class="section-body">Nuestros especialistas cuentan con formación académica sólida, experiencia clínica y dominan diferentes modelos de atención terapéutica.</p>
+        <div class="spec-models">
+          <div class="spec-model-item"><div><div class="spec-model-name">Terapia Cognitivo-Conductual (TCC)</div><div class="spec-model-desc">Modificación de patrones de pensamiento y comportamiento</div></div></div>
+          <div class="spec-model-item"><div><div class="spec-model-name">Psicoanálisis y Terapia Psicodinámica</div><div class="spec-model-desc">Exploración profunda del inconsciente</div></div></div>
+          <div class="spec-model-item"><div><div class="spec-model-name">Terapia Humanista</div><div class="spec-model-desc">Enfoque en el potencial de crecimiento personal</div></div></div>
+          <div class="spec-model-item"><div><div class="spec-model-name">Mindfulness y ACT</div><div class="spec-model-desc">Atención plena y aceptación para el bienestar</div></div></div>
+          <div class="spec-model-item"><div><div class="spec-model-name">Psicología Infantil y Juvenil</div><div class="spec-model-desc">Atención especializada para niños y adolescentes</div></div></div>
+          <div class="spec-model-item"><div><div class="spec-model-name">Psicología Organizacional</div><div class="spec-model-desc">Bienestar en el ámbito laboral y empresarial</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 9: EDUCACIÓN ── -->
+  <div class="section-wrap">
+    <div class="section">
+      <div id="educacion">
+        <div class="section-label">Respaldo Académico</div>
+        <h2 class="section-title">Educación y Colaboradores</h2>
+        <p class="section-body">Nuestros especialistas están respaldados por instituciones de reconocido prestigio.</p>
+        <div class="institutions-grid">
+          <!-- POSICIÓN 1: UVM → ./images/uvm.png -->
+          <div class="institution-badge"><img src="public/images/uvm.png" alt="UVM" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 2: UACH → ./images/uach.png -->
+          <div class="institution-badge"><img src="public/images/uach.png" alt="UACH" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 3: UVA → ./images/uva.png -->
+          <div class="institution-badge"><img src="public/images/uva.png" alt="UVA" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 4: IMSS → ./images/imss.png -->
+          <div class="institution-badge"><img src="public/images/imss.png" alt="IMSS" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 5: ISSSTE → ./images/isste.png -->
+          <div class="institution-badge"><img src="public/images/isste.png" alt="ISSSTE" class="institution-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 6: SSA Chih. → ./images/ssa.png -->
+          <div class="institution-badge"><img src="public/images/ssa.png" alt="SSA Chih." class="institution-img" onerror="this.style.opacity='0.3'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 10: MÉTODOS DE PAGO ── -->
+  <div class="section-wrap alt">
+    <div class="section">
+      <div id="pagos">
+        <div class="section-label">Facilidades de Pago</div>
+        <h2 class="section-title">Métodos de Pago</h2>
+        <div class="payment-methods">
+          <!-- POSICIÓN 1: Visa → ./images/visa.png -->
+          <div class="pay-method"><img src="public/images/visa.png" alt="Visa" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 2: Mastercard → ./images/master.png -->
+          <div class="pay-method"><img src="public/images/master.png" alt="Mastercard" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 3: PayPal → ./images/paypal.png -->
+          <div class="pay-method"><img src="public/images/paypal.png" alt="PayPal" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 4: Efectivo → ./images/efectivo.png -->
+          <div class="pay-method"><img src="public/images/efectivo.png" alt="Efectivo" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 5: Transferencia → ./images/transferencia.png -->
+          <div class="pay-method"><img src="public/images/transferencia.png" alt="Transferencia" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+          <!-- POSICIÓN 6: Depósito → ./images/deposito.png -->
+          <div class="pay-method"><img src="public/images/deposito.png" alt="Depósito" class="pay-img" onerror="this.style.opacity='0.3'"></div>
+        </div>
+        <div class="payment-note">Consulta directamente con el especialista para confirmar su método de cobro preferido.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 11: GARANTÍA ── -->
+  <div class="section-wrap">
+    <div class="section">
+      <div id="garantia">
+        <div class="section-label">Calidad</div>
+        <h2 class="section-title">Resultados Garantizados</h2>
+        <div class="guarantee-visual">
+          <div class="guarantee-circle"><div class="guarantee-num">99%</div><div class="guarantee-unit">satisfacción</div></div>
+          <p class="guarantee-label">de nuestros usuarios están completamente satisfechos</p>
+        </div>
+        <div class="guarantee-features">
+          <div class="guarantee-feat"><div class="guarantee-feat-text">Especialistas 100% verificados con cédula profesional</div></div>
+          <div class="guarantee-feat"><div class="guarantee-feat-text">Perfil detallado antes de tu primera consulta</div></div>
+          <div class="guarantee-feat"><div class="guarantee-feat-text">Cambia de especialista si no es el indicado</div></div>
+          <div class="guarantee-feat"><div class="guarantee-feat-text">Atención personalizada desde el primer contacto</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 12: FUNCIONES ── -->
+  <div class="section-wrap alt">
+    <div class="section">
+      <div id="funciones">
+        <div class="section-label">Manual de Uso</div>
+        <h2 class="section-title">Funciones de la Plataforma</h2>
+        <div class="functions-accordion">
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Qué hace esta plataforma? <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Línea Contigo es un directorio digital de especialistas en salud mental de Delicias y Meoqui. Puedes buscar psicólogos, revisar perfiles, especialidades, horarios, costos y contacto — todo sin costo para el usuario.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Paso 1 — Buscar un especialista <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Usa la barra de búsqueda. Escribe el nombre del especialista, su especialidad o el tipo de terapia. Los resultados se filtran automáticamente.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Paso 2 — Revisar perfiles <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Cada especialista tiene una tarjeta con nombre, especialidades, costo por sesión, horarios y datos de contacto. Desliza horizontalmente para ver todos.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Paso 3 — Contactar <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Haz clic en "Contactar" en la tarjeta del especialista. Serás redirigido a su teléfono o WhatsApp para agendar tu cita directamente.</div></div></div>
+        </div>
+        <div style="margin-top:28px">
+          <div class="section-label">Condiciones que Atendemos</div>
+          <div class="condition-tag-row">
+            <span class="condition-tag">Ansiedad</span><span class="condition-tag">Depresión</span>
+            <span class="condition-tag">TEPT</span><span class="condition-tag">Sueño</span>
+            <span class="condition-tag">Adicciones</span><span class="condition-tag">Duelo</span>
+            <span class="condition-tag">Pareja</span><span class="condition-tag">Burnout</span>
+            <span class="condition-tag">T. alimentación</span><span class="condition-tag">T. personalidad</span>
+            <span class="condition-tag">Desarrollo infantil</span><span class="condition-tag">Estrés laboral</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 13: FAQ ── -->
+  <div class="section-wrap">
+    <div class="section">
+      <div id="faq">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Preguntas Frecuentes</h2>
+        <div class="functions-accordion">
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Quiénes son los psicólogos registrados? <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Cada psicólogo o terapeuta registrado cuenta con formación profesional y experiencia. Todos tienen la preparación adecuada y cédula profesional que los autoriza a ejercer.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Quién me va a atender? <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Tú eliges al terapeuta que mejor se ajuste a tus objetivos. Si sientes que no es la persona adecuada, puedes fácilmente contactar a otro especialista.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Cuánto cuesta? <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">El directorio es gratuito. Los costos de cada sesión varían según el especialista. Puedes consultarlo directamente en su perfil o al contactarlo.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Es suficiente una sola sesión? <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">La primera sesión sirve para conocer al psicólogo, platicar sobre tu situación e identificar pasos a seguir. No es una sesión terapéutica completa, sino una introducción al trabajo posterior.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">¿Por cuánto tiempo puedo usar la plataforma? <span class="faq-arrow">▼</span></div><div class="faq-answer"><div class="faq-answer-inner">Puedes usar el directorio el tiempo que necesites. Algunas personas lo usan una sola vez, otras vuelven para encontrar diferentes especialistas. Tú decides.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SEG 14 + 15: FOOTER ── -->
+  <div class="section-wrap dark">
+    <div class="section">
+      <div id="enlaces">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-links-title">Nosotros</div>
+            <a class="footer-link-item" onclick="navTo('recomendacion')">Sobre Línea Contigo</a>
+            <a class="footer-link-item" onclick="navTo('especializacion')">Psicólogos Verificados</a>
+            <a class="footer-link-item" onclick="openPrivacy()">Aviso de privacidad</a>
+            <a class="footer-link-item" onclick="alert('Términos próximamente disponibles')">Términos y condiciones</a>
+          </div>
+          <div>
+            <div class="footer-links-title">Útiles</div>
+            <a class="footer-link-item" onclick="navTo('faq')">Preguntas frecuentes</a>
+            <a class="footer-link-item" onclick="navTo('atencion')">Buscar atención</a>
+            <a class="footer-link-item" onclick="navTo('funciones')">Manual de uso</a>
+            <a class="footer-link-item" onclick="navTo('comentarios')">Testimonios</a>
+            <a class="footer-link-item" href="tel:800-290-0024" style="color:rgba(255,255,255,0.6)">Líneas de emergencia</a>
+          </div>
+          <div>
+            <div class="footer-links-title">Contacto</div>
+            <button class="footer-contact-btn" onclick="window.location.href='mailto:contacto@lineacontigo.mx'">CONTACTA</button>
+          </div>
+        </div>
+
+        <div id="redes" style="padding-top:24px;border-top:1px solid rgba(255,255,255,0.1)">
+          <div style="text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;">Síguenos</div>
+          <div class="social-row">
+            <!-- POSICIÓN 1: Facebook → ./images/facebook.png -->
+            <a class="social-btn" href="#" target="_blank" title="Facebook" onclick="return alertRed('Facebook')">
+              <img src="public/images/facebook.png" alt="Facebook" class="social-img" onerror="this.outerHTML='f'">
+            </a>
+            <!-- POSICIÓN 2: Instagram → ./images/instagram.png -->
+            <a class="social-btn" href="#" target="_blank" title="Instagram" onclick="return alertRed('Instagram')">
+              <img src="public/images/instagram.png" alt="Instagram" class="social-img" onerror="this.outerHTML='📸'">
+            </a>
+            <!-- POSICIÓN 3: LinkedIn → ./images/linkedin.png -->
+            <a class="social-btn" href="#" target="_blank" title="LinkedIn" onclick="return alertRed('LinkedIn')">
+              <img src="public/images/linkedin.png" alt="LinkedIn" class="social-img" onerror="this.outerHTML='in'">
+            </a>
+            <!-- POSICIÓN 4: YouTube → ./images/yt.png -->
+            <a class="social-btn" href="#" target="_blank" title="YouTube" onclick="return alertRed('YouTube')">
+              <img src="public/images/yt.png" alt="YouTube" class="social-img" onerror="this.outerHTML='▶'">
+            </a>
+          </div>
+          <div class="copyright">
+            Hecho por Itzun Labs en Delicias, Chihuahua.<br>
+            © 2026 Línea Contigo. Todos los derechos reservados.<br>
+            El nombre y logotipo de Línea Contigo son marcas registradas.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /view-main -->
+
+<!-- ════════════════════════════════════════════════
+     VISTA DE USUARIOS
+════════════════════════════════════════════════ -->
+<div id="view-user" class="view">
+
+  <!-- Menú principal de usuario (visible por defecto) -->
+  <div id="user-menu-main" class="user-subview active">
+    <div class="user-header">
+      <!-- Avatar del usuario — muestra foto de Google si inició sesión -->
+      <div class="user-avatar-big" id="user-avatar-big">
+        <!-- La foto se inserta aquí por JS al iniciar sesión -->
+        <span id="user-avatar-initials">?</span>
+      </div>
+      <div>
+        <div class="user-info-name" id="user-display-name">Mi Cuenta</div>
+        <div class="user-info-email" id="user-display-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="96e0ffe5ffe2f7f8e2f3d6fafff8f3f7f5f9f8e2fff1f9b8fbee">[email&#160;protected]</a></div>
+        <span class="user-info-badge" id="user-type-badge">Visitante</span>
+      </div>
+    </div>
+
+    <div class="user-menu-wrap" style="margin:0 16px;margin-top:-32px">
+      <div class="user-menu-item" onclick="showUserSub('sub-personal')">
+        <div class="user-menu-icon icon-blue">👤</div>
+        <div class="user-menu-text"><div class="user-menu-title">Información personal</div><div class="user-menu-desc">Nombre, correo, teléfono</div></div>
+        <span class="user-menu-arrow">›</span>
+      </div>
+      <div class="user-menu-item" onclick="showUserSub('sub-security')">
+        <div class="user-menu-icon icon-green">🔒</div>
+        <div class="user-menu-text"><div class="user-menu-title">Seguridad y acceso</div><div class="user-menu-desc">Contraseña, sesiones activas</div></div>
+        <span class="user-menu-arrow">›</span>
+      </div>
+      <div class="user-menu-item" onclick="showUserSub('sub-privacy')">
+        <div class="user-menu-icon icon-purple">🛡️</div>
+        <div class="user-menu-text"><div class="user-menu-title">Privacidad y datos</div><div class="user-menu-desc">Configuración del historial, permisos</div></div>
+        <span class="user-menu-arrow">›</span>
+      </div>
+      <div class="user-menu-item" onclick="showUserSub('sub-wallet')">
+        <div class="user-menu-icon icon-yellow">💰</div>
+        <div class="user-menu-text"><div class="user-menu-title">Billetera y pagos</div><div class="user-menu-desc">Formas de pago guardadas</div></div>
+        <span class="user-menu-arrow">›</span>
+      </div>
+      <div class="user-menu-item" onclick="showUserSub('sub-favorites')">
+        <div class="user-menu-icon icon-blue">❤️</div>
+        <div class="user-menu-text"><div class="user-menu-title">Favoritos</div><div class="user-menu-desc">Especialistas guardados</div></div>
+        <span class="user-menu-arrow">›</span>
+      </div>
+      <div class="user-menu-item" onclick="showUserSub('sub-help')">
+        <div class="user-menu-icon icon-green">❓</div>
+        <div class="user-menu-text"><div class="user-menu-title">Ayuda y soporte</div><div class="user-menu-desc">Preguntas frecuentes, contacto</div></div>
+        <span class="user-menu-arrow">›</span>
+      </div>
+      <div class="user-menu-item" onclick="signOut()" style="border-bottom:none">
+        <div class="user-menu-icon" style="background:rgba(224,24,94,0.1)">🚪</div>
+        <div class="user-menu-text"><div class="user-menu-title" style="color:#e0185e">Cerrar sesión</div><div class="user-menu-desc">Salir de mi cuenta</div></div>
+      </div>
+    </div>
+
+    <div style="padding:16px;text-align:center">
+      <button class="btn btn-primary" onclick="showView('main')" style="font-size:13px;padding:12px 24px">← Volver al inicio</button>
+    </div>
+  </div>
+
+  <!-- SUB: Información Personal -->
+  <div id="sub-personal" class="user-subview">
+    <div class="subview-header">
+      <button class="subview-back" onclick="showUserSub('user-menu-main')">←</button>
+      <div class="subview-title">Información Personal</div>
+    </div>
+    <div class="subview-content">
+      <!-- ── FOTO PERFIL EDITABLE ──
+           En esta sección el usuario puede ver y editar su foto de perfil.
+           Para una implementación real, aquí iría un input type="file" y lógica de subida.
+           La imagen actual del usuario se muestra en el div .user-avatar-big (arriba).
+      ── -->
+      <div class="subview-card" style="text-align:center;margin-bottom:20px">
+        <div style="width:80px;height:80px;border-radius:50%;background:var(--blue);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:30px;color:white;font-family:var(--font-display);font-weight:800;overflow:hidden" id="sub-avatar-preview">?</div>
+        <button class="btn btn-green" style="font-size:12px;padding:9px 20px" onclick="alert('Función de subida de foto próximamente disponible')">📷 Cambiar foto</button>
+        <p style="font-size:11px;color:var(--gray-text);margin-top:8px">Tamaño máximo: 5MB · JPG, PNG, WebP</p>
+      </div>
+      <div class="subview-card">
+        <h3>Datos de Contacto</h3>
+        <div class="form-field"><label class="form-label">Nombre completo</label><input class="form-input" type="text" id="field-name" placeholder="Tu nombre" /></div>
+        <div class="form-field"><label class="form-label">Correo electrónico</label><input class="form-input" type="email" id="field-email" placeholder="tu@correo.com" disabled /></div>
+        <div class="form-field"><label class="form-label">Teléfono</label><input class="form-input" type="tel" id="field-phone" placeholder="614 000 0000" /></div>
+        <div class="form-field"><label class="form-label">Municipio</label>
+          <select class="form-input" id="field-city">
+            <option value="">Selecciona...</option>
+            <option value="delicias">Delicias, Chihuahua</option>
+            <option value="meoqui">Meoqui, Chihuahua</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <button class="btn-save" onclick="savePersonalInfo()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB: Seguridad -->
+  <div id="sub-security" class="user-subview">
+    <div class="subview-header">
+      <button class="subview-back" onclick="showUserSub('user-menu-main')">←</button>
+      <div class="subview-title">Seguridad y Acceso</div>
+    </div>
+    <div class="subview-content">
+      <div class="subview-card">
+        <h3>Información de la Cuenta</h3>
+        <div class="info-row"><span class="info-key">Tipo de cuenta</span><span class="info-val" id="sec-account-type">Visitante</span></div>
+        <div class="info-row"><span class="info-key">Último acceso</span><span class="info-val" id="sec-last-login">—</span></div>
+        <div class="info-row"><span class="info-key">Sesión activa</span><span class="info-val">Este dispositivo</span></div>
+      </div>
+      <div class="subview-card">
+        <h3>Acciones</h3>
+        <p style="margin-bottom:14px">Si iniciaste sesión con Google, la seguridad es administrada por tu cuenta de Google.</p>
+        <button class="btn-save" onclick="alert('Redirigiendo a configuración de Google...')">Administrar cuenta Google</button>
+      </div>
+      <div class="subview-card">
+        <h3>Zona de peligro</h3>
+        <p style="margin-bottom:14px">Estas acciones son irreversibles.</p>
+        <button class="btn-danger" onclick="confirmDeleteAccount()">Eliminar mi cuenta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB: Privacidad -->
+  <div id="sub-privacy" class="user-subview">
+    <div class="subview-header">
+      <button class="subview-back" onclick="showUserSub('user-menu-main')">←</button>
+      <div class="subview-title">Privacidad y Datos</div>
+    </div>
+    <div class="subview-content">
+      <div class="subview-card">
+        <h3>Preferencias de Privacidad</h3>
+        <div class="privacy-toggle">
+          <div><div class="toggle-label">Compartir datos de uso</div><div class="toggle-desc">Ayúdanos a mejorar la plataforma</div></div>
+          <label class="toggle-switch"><input type="checkbox" id="toggle-usage" checked><span class="toggle-slider"></span></label>
+        </div>
+        <div class="privacy-toggle">
+          <div><div class="toggle-label">Notificaciones por correo</div><div class="toggle-desc">Recibe novedades y actualizaciones</div></div>
+          <label class="toggle-switch"><input type="checkbox" id="toggle-emails"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="privacy-toggle">
+          <div><div class="toggle-label">Historial de búsquedas</div><div class="toggle-desc">Guardar mis búsquedas recientes</div></div>
+          <label class="toggle-switch"><input type="checkbox" id="toggle-history" checked><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+      <div class="subview-card">
+        <h3>Descargar mis datos</h3>
+        <p style="margin-bottom:14px">Solicita una copia de toda tu información almacenada en Línea Contigo.</p>
+        <button class="btn-save" onclick="alert('Solicitud enviada. Recibirás un correo en 24-48 horas.')">Solicitar mis datos</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB: Billetera -->
+  <div id="sub-wallet" class="user-subview">
+    <div class="subview-header">
+      <button class="subview-back" onclick="showUserSub('user-menu-main')">←</button>
+      <div class="subview-title">Billetera y Pagos</div>
+    </div>
+    <div class="subview-content">
+      <div class="subview-card">
+        <h3>Métodos de pago</h3>
+        <p style="margin-bottom:14px">Guarda tus formas de pago para agilizar el proceso al contactar a un especialista.</p>
+        <div style="background:var(--gray-light);border-radius:10px;padding:20px;text-align:center;color:var(--gray-text);font-size:13px">
+          🏦 No tienes métodos de pago guardados aún.<br><br>
+          <button class="btn-save" onclick="alert('Función de métodos de pago próximamente disponible')">+ Agregar método</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB: Favoritos -->
+  <div id="sub-favorites" class="user-subview">
+    <div class="subview-header">
+      <button class="subview-back" onclick="showUserSub('user-menu-main')">←</button>
+      <div class="subview-title">Especialistas Favoritos</div>
+    </div>
+    <div class="subview-content">
+      <div class="subview-card">
+        <h3>Tus favoritos</h3>
+        <p style="margin-bottom:14px">Guarda a tus especialistas de confianza para encontrarlos fácilmente.</p>
+        <div style="background:var(--gray-light);border-radius:10px;padding:20px;text-align:center;color:var(--gray-text);font-size:13px">
+          ❤️ No tienes especialistas guardados aún.<br><br>
+          <button class="btn-save" onclick="showView('main');navTo('especialistas')">Ver Especialistas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUB: Ayuda -->
+  <div id="sub-help" class="user-subview">
+    <div class="subview-header">
+      <button class="subview-back" onclick="showUserSub('user-menu-main')">←</button>
+      <div class="subview-title">Ayuda y Soporte</div>
+    </div>
+    <div class="subview-content">
+      <div class="subview-card">
+        <h3>Contacto directo</h3>
+        <p style="margin-bottom:14px">¿Tienes dudas o necesitas ayuda? Contáctanos directamente.</p>
+        <button class="btn-save" onclick="window.location.href='mailto:contacto@lineacontigo.mx'">📧 Enviar correo</button>
+        &nbsp;
+        <!-- ── WHATSAPP SOPORTE ──
+             Reemplaza el número en el href por el número real de soporte.
+        ── -->
+        <button class="btn-green btn" style="font-size:13px;padding:12px 20px" onclick="window.open('https://wa.me/5216141000000','_blank')">💬 WhatsApp</button>
+      </div>
+      <div class="subview-card">
+        <h3>Preguntas frecuentes</h3>
+        <p style="margin-bottom:14px">Consulta las respuestas a las preguntas más comunes.</p>
+        <button class="btn-save" onclick="showView('main');navTo('faq')">Ver FAQ</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /view-user -->
+
+<!-- ── BOTÓN SOS ── -->
+<button id="sos-btn" onclick="emergencyCall()" title="Emergencia — Llamar al 6392311870">
+  <img src="public/images/emergencia.png" alt="Emergencia" style="width:32px;height:32px;object-fit:contain;display:block;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <span class="sos-icon" style="display:none">SOS</span>
+</button>
+
+<!-- ── BOTÓN WHATSAPP ──
+     Reemplaza el número "5216141000000" con el número real de tu línea de WhatsApp.
+     Formato: 52 (código México) + número de 10 dígitos sin espacios ni guiones.
+     Ejemplo: 5216141234567
+── -->
+<a id="whatsapp-btn" href="https://wa.me/5216141000000?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20Línea%20Contigo." target="_blank" title="WhatsApp">
+  <img src="public/images/whap.png" alt="WhatsApp" style="width:32px;height:32px;object-fit:contain;display:block;" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-size:26px;color:white\'>💬</span>')">
+</a>
+
+<!-- ── MODAL PRIVACIDAD ── -->
+<div id="privacy-modal">
+  <div style="position:relative;width:100%">
+    <div class="privacy-sheet">
+      <button class="privacy-close" onclick="closePrivacy()">✕</button>
+      <h2>Aviso de Privacidad</h2>
+      <p><strong>Línea Contigo</strong> — Directorio de Salud Mental · Delicias y Meoqui, Chihuahua.</p>
+      <p>En cumplimiento con la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), le informamos que los datos personales que nos proporcione serán utilizados únicamente para facilitar la conexión entre usuarios y especialistas en salud mental.</p>
+      <p><strong>Datos recabados:</strong> Nombre, datos de contacto y preferencias de búsqueda.</p>
+      <p><strong>Finalidad:</strong> Directorio de atención en salud mental, comunicación informativa y mejora del servicio.</p>
+      <p><strong>Confidencialidad:</strong> Sus datos no serán compartidos con terceros sin su consentimiento expreso.</p>
+      <p>Para ejercer sus derechos ARCO, contáctenos en: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7a4a8a9b3a6a4b3a887abaea9a2a6a4a8a9b3aea0a8e9aabf">[email&#160;protected]</a></strong></p>
+      <br>
+      <button class="btn btn-primary" onclick="closePrivacy()" style="width:100%">Entendido</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  /* ══ DATOS — Especialistas
+     Para actualizar un especialista: edita su objeto en este array.
+     El campo "contact" acepta:
+       - tel:NUMERO   → llama por teléfono
+       - https://wa.me/52NUMERO → abre WhatsApp
+  ══ */
+  const specialists = [
+    { initials:'VR', name:'Dra. Valentina Ríos Castillo', role:'Psicóloga Clínica', education:'Lic. Psicología — UACH', cost:'$600 MXN', schedule:'Lun–Vie 9–18h', tags:['TCC','Mindfulness','Ansiedad'], contact:'tel:6141000001', featured:true },
+    { initials:'MA', name:'Mtro. Miguel Ángel Soto', role:'Psicoterapeuta', education:'Maestría — UVM Chihuahua', cost:'$700 MXN', schedule:'Mar–Sáb 10–19h', tags:['Depresión','Duelo','Pareja'], contact:'tel:6141000002', featured:false },
+    { initials:'LG', name:'Lic. Laura González Pérez', role:'Psicología Infantil', education:'Especialidad Infantil — UVA', cost:'$550 MXN', schedule:'Lun–Jue 8–17h', tags:['Niños','TDAH','Desarrollo'], contact:'tel:6141000003', featured:true },
+    { initials:'RS', name:'Lic. Rodrigo Salinas', role:'Terapeuta Familiar', education:'Lic. Psicología — UACH', cost:'$650 MXN', schedule:'Mié–Dom 9–19h', tags:['Familia','Adicciones','TCC'], contact:'tel:6141000004', featured:false },
+    { initials:'CP', name:'Dra. Carmen Palomino', role:'Tanatóloga', education:'Posgrado Tanatología — IMSS', cost:'$580 MXN', schedule:'Lun–Vie 10–18h', tags:['Duelo','Pérdida','Adultos'], contact:'tel:6141000005', featured:false },
+    { initials:'JH', name:'Lic. Jesús Herrera Vega', role:'Psicólogo Clínico', education:'Lic. Psicología — UACH', cost:'$500 MXN', schedule:'Mar–Sáb 11–20h', tags:['TEPT','Trauma','Ansiedad'], contact:'tel:6141000006', featured:false }
+  ];
+
+  /* ══ DATOS — Reseñas ══ */
+  const reviews = [
+    { stars:5, text:'Gracias al directorio pude encontrar a mi psicóloga en minutos. Valentina es increíble, muy profesional y empática.', name:'Ana P.', location:'Delicias' },
+    { stars:5, text:'Excelente plataforma. Pude ver horarios, costos y especialidades antes de llamar. Me ahorró mucho tiempo.', name:'Carlos M.', location:'Meoqui' },
+    { stars:5, text:'Muy útil para nuestra región. Es difícil encontrar psicólogos cerca y aquí están todos reunidos.', name:'Patricia R.', location:'Delicias' },
+    { stars:4, text:'Buen directorio local. Mi terapeuta me ayudó mucho con el proceso de duelo. Muy recomendable.', name:'Roberto L.', location:'Delicias' },
+    { stars:5, text:'Encontré psicóloga infantil para mi hijo de 8 años en menos de un día. ¡Gracias Línea Contigo!', name:'Sofía V.', location:'Meoqui' }
+  ];
+
+  /* ══ ESTADO DE SESIÓN ══ */
+  let currentUser = null;
+  let isLoggedIn = false;
+
+  /* ══ RENDER ESPECIALISTAS ══ */
+  function renderSpecialists(data) {
+    document.getElementById('specialists-container').innerHTML = data.map(s => `
+      <div class="specialist-card">
+        <div class="specialist-card-header">
+          <div class="specialist-avatar">
+            <img
+              src="public/images/${s.initials.toLowerCase()}.png"
+              alt="${s.name}"
+              style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            >
+            <span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-family:var(--font-display);font-size:18px;color:var(--white);font-weight:800">${s.initials}</span>
+          </div>
+          <div>
+            <div class="specialist-name">${s.name}</div>
+            <div class="specialist-role">${s.role}</div>
+          </div>
+          ${s.featured ? '<span class="specialist-badge">DEST.</span>' : ''}
+        </div>
+        <div class="specialist-body">
+          <div class="spec-row"><span class="spec-label">🎓 Formación</span><span class="spec-value" style="font-size:10px;text-align:right;max-width:130px">${s.education}</span></div>
+          <div class="spec-divider"></div>
+          <div class="spec-row"><span class="spec-label">💰 Costo</span><span class="spec-value">${s.cost}/sesión</span></div>
+          <div class="spec-hours"><strong>⏰</strong> ${s.schedule}</div>
+          <div class="spec-tags">${s.tags.map(t=>`<span class="spec-tag">${t}</span>`).join('')}</div>
+          <button class="spec-contact-btn" onclick="window.location.href='${s.contact}'">Contactar</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ══ RENDER RESEÑAS ══ */
+  function renderReviews() {
+    document.getElementById('reviews-container').innerHTML = reviews.map(r => `
+      <div class="review-card">
+        <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
+        <p class="review-text">"${r.text}"</p>
+        <div class="review-author">
+          <div class="review-avatar">${r.name[0]}</div>
+          <div><div class="review-name">${r.name}</div><div class="review-location">${r.location}, Chih.</div></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ══ BÚSQUEDA DE ATENCIÓN ══ */
+  function searchAttention() {
+    const q = document.getElementById('attention-input').value.toLowerCase().trim();
+    const resultsDiv = document.getElementById('attention-results');
+    if (!q) { resultsDiv.classList.remove('visible'); return; }
+
+    const keywords = { 'ansiedad':['VR','JH'], 'tcc':['VR','RS'], 'depresión':['MA','VR'], 'depresion':['MA','VR'],
+      'duelo':['CP','MA'], 'niños':['LG'], 'infantil':['LG'], 'tdah':['LG'], 'pareja':['MA','RS'],
+      'familia':['RS'], 'adicciones':['RS'], 'tept':['JH'], 'trauma':['JH'], 'mindfulness':['VR'], 'tanatología':['CP'] };
+
+    let matched = new Set();
+    for (const [kw, list] of Object.entries(keywords)) {
+      if (q.includes(kw)) list.forEach(i => matched.add(i));
+    }
+    specialists.forEach(s => {
+      if (s.name.toLowerCase().includes(q) || s.tags.some(t=>t.toLowerCase().includes(q)) || s.role.toLowerCase().includes(q))
+        matched.add(s.initials);
+    });
+
+    const results = specialists.filter(s => matched.has(s.initials));
+    if (!results.length) {
+      resultsDiv.innerHTML = '<div class="no-results">🔍 No encontramos especialistas para esa búsqueda. Intenta: ansiedad, TCC, depresión, duelo, niños...</div>';
+    } else {
+      resultsDiv.innerHTML = `<p style="font-size:13px;color:var(--gray-text);margin-bottom:10px">Se encontraron <strong>${results.length}</strong> especialistas para "<strong>${q}</strong>":</p>` +
+        results.map(s => `
+          <div class="attention-result-card">
+            <div class="ar-avatar">${s.initials}</div>
+            <div class="ar-info"><div class="ar-name">${s.name}</div><div class="ar-spec">${s.tags.join(' · ')}</div></div>
+            <button onclick="window.location.href='${s.contact}'" class="ar-match">Contactar</button>
+          </div>`).join('');
+    }
+    resultsDiv.classList.add('visible');
+  }
+  document.getElementById('attention-input').addEventListener('keydown', e => { if(e.key==='Enter') searchAttention(); });
+
+  /* ══ ACORDEÓN FAQ ══ */
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const was = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!was) item.classList.add('open');
+  }
+
+  /* ══ BARRA RÁPIDA ══ */
+  const qOverlay = document.getElementById('quick-nav-overlay');
+  const qPanel = document.getElementById('quick-nav-panel');
+  document.getElementById('menu-toggle').onclick = () => { qOverlay.classList.add('open'); qPanel.classList.add('open'); };
+  document.getElementById('qnav-close').onclick = closeQuickNav;
+  qOverlay.onclick = closeQuickNav;
+  function closeQuickNav() { qOverlay.classList.remove('open'); qPanel.classList.remove('open'); }
+  function navTo(id) { closeQuickNav(); setTimeout(() => document.getElementById(id)?.scrollIntoView({behavior:'smooth'}), 200); }
+
+  /* ══ SISTEMA DE VISTAS ══ */
+  function showView(name) {
+    closeQuickNav();
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const el = document.getElementById('view-' + name);
+    if (el) { el.classList.add('active'); window.scrollTo({top:0, behavior:'smooth'}); }
+    if (name === 'user') updateUserUI();
+  }
+
+  /* ══ SUBVISTAS DE USUARIO ══ */
+  function showUserSub(subId) {
+    document.querySelectorAll('.user-subview').forEach(v => v.classList.remove('active'));
+    const el = document.getElementById(subId);
+    if (el) el.classList.add('active');
+  }
+
+  /* ══ ACTUALIZAR UI DE USUARIO ══ */
+  function updateUserUI() {
+    const nameEl = document.getElementById('user-display-name');
+    const emailEl = document.getElementById('user-display-email');
+    const badgeEl = document.getElementById('user-type-badge');
+    const initialsEl = document.getElementById('user-avatar-initials');
+    const subInitialsEl = document.getElementById('sub-avatar-preview');
+    const secTypeEl = document.getElementById('sec-account-type');
+
+    if (isLoggedIn && currentUser) {
+      nameEl.textContent = currentUser.name || 'Usuario';
+      emailEl.textContent = currentUser.email || '';
+      badgeEl.textContent = 'Google';
+      badgeEl.style.background = 'rgba(37,211,102,0.2)';
+      badgeEl.style.color = '#25d366';
+      const initials = (currentUser.name || 'U').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+      initialsEl.textContent = initials;
+      subInitialsEl.textContent = initials;
+      if (secTypeEl) secTypeEl.textContent = 'Google Sign-In';
+      // Si hay foto de Google
+      if (currentUser.photo) {
+        const imgEl = document.getElementById('nav-avatar-img');
+        if (imgEl) { imgEl.src = currentUser.photo; imgEl.style.display = 'block'; document.getElementById('nav-user-icon').style.display = 'none'; }
+      }
+      if (document.getElementById('field-name')) document.getElementById('field-name').value = currentUser.name || '';
+      if (document.getElementById('field-email')) document.getElementById('field-email').value = currentUser.email || '';
+      const lastLoginEl = document.getElementById('sec-last-login');
+      if (lastLoginEl) lastLoginEl.textContent = new Date().toLocaleDateString('es-MX', {day:'2-digit',month:'short',year:'numeric'});
+    } else {
+      nameEl.textContent = 'Visitante';
+      emailEl.textContent = 'visitante@lineacontigo.mx';
+      badgeEl.textContent = 'Visitante';
+      initialsEl.textContent = '👤';
+      subInitialsEl.textContent = '👤';
+      if (secTypeEl) secTypeEl.textContent = 'Visitante (sin sesión)';
+    }
+  }
+
+  /* ══ AUTENTICACIÓN
+     GOOGLE SIGN-IN — DESHABILITADO EN V3
+     La función está preparada pero bloqueada.
+     Para habilitar en versión futura:
+       1. Crea un proyecto en console.cloud.google.com
+       2. Obtén tu Client ID de Google Identity Services
+       3. Reemplaza el bloque "BLOQUEADO" por la implementación real de GIS
+       4. Cambia GOOGLE_SIGNIN_ENABLED = true
+  ══ */
+  const GOOGLE_SIGNIN_ENABLED = false; // ← Cambiar a true cuando esté listo
+
+  function signInGoogle() {
+    if (!GOOGLE_SIGNIN_ENABLED) {
+      // V3: Inicio de sesión con Google deshabilitado temporalmente
+      console.log('[LineaContigo] Google Sign-In no disponible en esta versión. Esta función estará disponible en una versión futura.');
+      return; // No hace nada más — el usuario debe usar "Entrar como Visitante"
+    }
+    // ── IMPLEMENTACIÓN FUTURA (descomentar cuando GOOGLE_SIGNIN_ENABLED = true) ──
+    // currentUser = { name:'Usuario Google', email:'usuario@gmail.com', photo:'' };
+    // isLoggedIn = true;
+    // hideSplash();
+    // showView('main');
+  }
+
+  function enterAsVisitor() {
+    currentUser = null; isLoggedIn = false;
+    hideSplash();
+    showView('main');
+    saveSession(); // Guardar estado visitante para no mostrar splash en refresh
+  }
+
+  function signOut() {
+    if (confirm('¿Deseas cerrar sesión?')) {
+      currentUser = null; isLoggedIn = false;
+      clearSession(); // Limpiar sesión guardada — el splash aparecerá de nuevo
+      updateUserUI();
+      showView('main');
+      document.getElementById('splash').classList.remove('hidden');
+    }
+  }
+
+  function confirmDeleteAccount() {
+    if (confirm('⚠️ ¿Estás seguro? Esta acción eliminará tu cuenta permanentemente.')) {
+      alert('Cuenta eliminada. Lamentamos verte partir.');
+      signOut();
+    }
+  }
+
+  /* ══ GUARDAR INFO PERSONAL ══ */
+  function savePersonalInfo() {
+    const name = document.getElementById('field-name').value;
+    if (name && currentUser) { currentUser.name = name; updateUserUI(); }
+    alert('✅ Información guardada correctamente.');
+  }
+
+  /* ══ SPLASH ══ */
+  function hideSplash() { document.getElementById('splash').classList.add('hidden'); }
+
+  function openPrivacyFromSplash() {
+    document.getElementById('privacy-modal').classList.add('open');
+  }
+
+  /* ══ PRIVACIDAD ══ */
+  function openPrivacy() { closeQuickNav(); setTimeout(() => document.getElementById('privacy-modal').classList.add('open'), 250); }
+  function closePrivacy() { document.getElementById('privacy-modal').classList.remove('open'); }
+  document.getElementById('privacy-modal').addEventListener('click', e => { if(e.target===document.getElementById('privacy-modal')) closePrivacy(); });
+
+  /* ══ SOS ══ */
+  function emergencyCall() { if(confirm('⚠️ ¿Deseas llamar al número de emergencias?')) window.location.href='tel:6392311870'; }
+
+  /* ══ REDES SOCIALES ══ */
+  function alertRed(red) { alert(`Link de ${red} no configurado aún. Edita el href en el HTML de la sección de Redes Sociales.`); return false; }
+
+  /* ══════════════════════════════════════════════════
+     PERSISTENCIA DE SESIÓN — sessionStorage
+     La sesión se mantiene mientras el tab esté abierto.
+     Al hacer refresh: se muestra advertencia en consola
+     y se recupera el estado automáticamente.
+
+     NOTA: sessionStorage se borra al cerrar el tab.
+     Para persistencia entre tabs usar localStorage
+     (requiere consideraciones de seguridad adicionales).
+  ══════════════════════════════════════════════════ */
+  const SESSION_KEY = 'lc_session_v3';
+
+  function saveSession() {
+    if (isLoggedIn && currentUser) {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+        isLoggedIn: true,
+        user: currentUser,
+        savedAt: Date.now()
+      }));
+    } else {
+      // Visitante: guardar estado para no mostrar splash de nuevo
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+        isLoggedIn: false,
+        user: null,
+        savedAt: Date.now()
+      }));
+    }
+  }
+
+  function loadSession() {
+    try {
+      const raw = sessionStorage.getItem(SESSION_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch(e) {
+      console.warn('[LineaContigo] No se pudo leer la sesión guardada:', e);
+      return null;
+    }
+  }
+
+  function clearSession() {
+    sessionStorage.removeItem(SESSION_KEY);
+  }
+
+  // Advertencia al hacer refresh / reenvío de formulario
+  window.addEventListener('beforeunload', function(e) {
+    if (isLoggedIn || sessionStorage.getItem(SESSION_KEY)) {
+      console.log('[LineaContigo] Refresh detectado. Reenvío de formulario puede provocar cierre de sesión si hay datos sin guardar. La sesión se recuperará automáticamente desde sessionStorage.');
+      // No se bloquea el cierre — solo se registra en consola
+      // Para bloquear con diálogo nativo del navegador, descomentar:
+      // e.preventDefault(); e.returnValue = '';
+    }
+  });
+
+  /* ══ INICIALIZACIÓN ══ */
+  (function init() {
+    renderSpecialists(specialists);
+    renderReviews();
+
+    // Intentar recuperar sesión previa
+    const savedSession = loadSession();
+
+    if (savedSession) {
+      // Ya pasó por el splash antes — no mostrarlo de nuevo
+      console.log('[LineaContigo] Sesión recuperada desde sessionStorage. Estado:', savedSession.isLoggedIn ? 'Autenticado' : 'Visitante');
+      isLoggedIn = savedSession.isLoggedIn || false;
+      currentUser = savedSession.user || null;
+      hideSplash();
+      showView('main');
+      updateUserUI();
+    } else {
+      // Primera carga — mostrar splash normalmente
+      updateUserUI();
+    }
+  })();
+
+</script>
+</body>
+</html>
