@@ -4,15 +4,158 @@
     {
       "src": "index.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "*.png",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/pprincipal.png",
+      "dest": "/pprincipal.png"
+    },
+    {
+      "src": "/logo.png",
+      "dest": "/logo.png"
+    },
+    {
+      "src": "/psico.png",
+      "dest": "/psico.png"
+    },
+    {
+      "src": "/vr.png",
+      "dest": "/vr.png"
+    },
+    {
+      "src": "/ma.png",
+      "dest": "/ma.png"
+    },
+    {
+      "src": "/lg.png",
+      "dest": "/lg.png"
+    },
+    {
+      "src": "/rs.png",
+      "dest": "/rs.png"
+    },
+    {
+      "src": "/cp.png",
+      "dest": "/cp.png"
+    },
+    {
+      "src": "/jh.png",
+      "dest": "/jh.png"
+    },
+    {
+      "src": "/ainvididual.png",
+      "dest": "/ainvididual.png"
+    },
+    {
+      "src": "/apareja.png",
+      "dest": "/apareja.png"
+    },
+    {
+      "src": "/aninos.png",
+      "dest": "/aninos.png"
+    },
+    {
+      "src": "/empoderamiento.png",
+      "dest": "/empoderamiento.png"
+    },
+    {
+      "src": "/mindfulness.png",
+      "dest": "/mindfulness.png"
+    },
+    {
+      "src": "/tanatologia.png",
+      "dest": "/tanatologia.png"
+    },
+    {
+      "src": "/uvm.png",
+      "dest": "/uvm.png"
+    },
+    {
+      "src": "/uach.png",
+      "dest": "/uach.png"
+    },
+    {
+      "src": "/uva.png",
+      "dest": "/uva.png"
+    },
+    {
+      "src": "/imss.png",
+      "dest": "/imss.png"
+    },
+    {
+      "src": "/isste.png",
+      "dest": "/isste.png"
+    },
+    {
+      "src": "/ssa.png",
+      "dest": "/ssa.png"
+    },
+    {
+      "src": "/visa.png",
+      "dest": "/visa.png"
+    },
+    {
+      "src": "/master.png",
+      "dest": "/master.png"
+    },
+    {
+      "src": "/paypal.png",
+      "dest": "/paypal.png"
+    },
+    {
+      "src": "/efectivo.png",
+      "dest": "/efectivo.png"
+    },
+    {
+      "src": "/transferencia.png",
+      "dest": "/transferencia.png"
+    },
+    {
+      "src": "/deposito.png",
+      "dest": "/deposito.png"
+    },
+    {
+      "src": "/facebook.png",
+      "dest": "/facebook.png"
+    },
+    {
+      "src": "/instagram.png",
+      "dest": "/instagram.png"
+    },
+    {
+      "src": "/linkedin.png",
+      "dest": "/linkedin.png"
+    },
+    {
+      "src": "/yt.png",
+      "dest": "/yt.png"
+    },
+    {
+      "src": "/emergencia.png",
+      "dest": "/emergencia.png"
+    },
+    {
+      "src": "/whap.png",
+      "dest": "/whap.png"
+    },
     {
       "src": "/(.*)",
       "dest": "/$1"
     }
   ],
   "headers": [
+    {
+      "source": "/(.*\\.png)",
+      "headers": [
+        { "key": "Content-Type", "value": "image/png" },
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
