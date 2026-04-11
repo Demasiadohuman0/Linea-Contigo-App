@@ -803,7 +803,7 @@
 
     /* ── IMAGEN HERO (480×540px o mayor) ── */
     .hero-img {
-      width: 100%; max-width: 380px;
+      width: 100%; max-width: 266px;
       height: auto;
       border-radius: 24px;
       box-shadow: var(--shadow-lg);
@@ -812,29 +812,33 @@
       aspect-ratio: 480 / 540;
     }
 
-    /* ── LOGO SPLASH (96×96px) ── */
+    /* ── LOGO SPLASH (96×96px) — v4.2: +20%, cover para llenar círculo ── */
     .splash-logo-img {
-      width: 100%; height: 100%;
-      object-fit: contain;
+      width: 120%; height: 120%;
+      object-fit: cover;
       display: block;
     }
 
-    /* ── LOGO NAVBAR (36×36px) ── */
+    /* ── LOGO NAVBAR (36×36px) — v4.2: +20%, cover para llenar círculo ── */
     .nav-logo-img {
-      width: 100%; height: 100%;
-      object-fit: contain;
+      width: 120%; height: 120%;
+      object-fit: cover;
       display: block;
     }
 
-    /* ── SERVICIOS (64×64px recomendado) ── */
+    /* ── SERVICIOS — v4.2: +40% (54px → 76px) ── */
     .service-img {
-      width: 54px; height: 54px;
-      object-fit: contain;
+      width: 76px; height: 76px;
+      object-fit: cover;
       display: block;
       margin: 0 auto;
+      border-radius: 50%;
     }
 
-    /* ── ESPECIALISTAS (100×100px mínimo) ── */
+    /* ── ESPECIALISTAS — v4.2: +20%, avatar 50px → 60px ── */
+    .specialist-avatar {
+      width: 60px; height: 60px;
+    }
     .specialist-avatar img {
       width: 100%; height: 100%;
       object-fit: cover;
@@ -842,13 +846,13 @@
       display: block;
     }
 
-    /* ── INSTITUCIONES EDUCATIVAS (64×32px o mayor) ── */
+    /* ── INSTITUCIONES EDUCATIVAS — v4.2: +20% (44px → 53px) ── */
     .institution-badge {
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 12px 8px;
-      min-height: 68px;
+      min-height: 72px;
       background: var(--white);
       border-radius: 12px;
       border: 1px solid var(--gray-mid);
@@ -857,19 +861,19 @@
     .institution-img {
       width: auto;
       max-width: 100%;
-      max-height: 44px;
+      max-height: 53px;
       object-fit: contain;
       display: block;
       margin: 0 auto;
     }
 
-    /* ── MÉTODOS DE PAGO (80×48px recomendado) ── */
+    /* ── MÉTODOS DE PAGO — v4.2: +20% (68px/40px → 82px/48px) ── */
     .pay-method {
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 10px 6px;
-      min-height: 64px;
+      min-height: 72px;
       background: var(--white);
       border-radius: 10px;
       border: 2px solid var(--gray-mid);
@@ -878,26 +882,25 @@
     .pay-method:hover { border-color: var(--blue); }
     .pay-img {
       width: auto;
-      max-width: 68px;
-      max-height: 40px;
+      max-width: 82px;
+      max-height: 48px;
       object-fit: contain;
       display: block;
       margin: 0 auto;
     }
 
-    /* ── REDES SOCIALES (22×22px) ── */
+    /* ── REDES SOCIALES — v4.2: +30% (22px → 29px), sin filtro blanco ── */
     .social-img {
-      width: 22px;
-      height: 22px;
+      width: 29px;
+      height: 29px;
       object-fit: contain;
       display: block;
-      filter: brightness(0) invert(1);
     }
 
-    /* ── BOTONES SOS / WHATSAPP ── */
+    /* ── BOTONES SOS / WHATSAPP — v4.2: +30% (28px → 36px) ── */
     #sos-btn img, #whatsapp-btn img {
-      width: 28px;
-      height: 28px;
+      width: 36px;
+      height: 36px;
       object-fit: contain;
       display: block;
     }
@@ -917,25 +920,26 @@
     @media (max-width: 480px) {
       .institutions-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
       .payment-methods    { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .institution-badge  { padding: 8px 4px; min-height: 54px; }
-      .institution-img    { max-height: 32px; }
-      .pay-method         { padding: 8px 4px; min-height: 54px; }
-      .pay-img            { max-width: 52px; max-height: 30px; }
-      .service-circle     { width: 72px; height: 72px; }
-      .service-img        { width: 40px; height: 40px; }
+      .institution-badge  { padding: 8px 4px; min-height: 60px; }
+      .institution-img    { max-height: 38px; }
+      .pay-method         { padding: 8px 4px; min-height: 60px; }
+      .pay-img            { max-width: 62px; max-height: 36px; }
+      .service-circle     { width: 80px; height: 80px; }
+      .service-img        { width: 56px; height: 56px; }
       .specialist-card    { min-width: 240px; }
+      .social-img         { width: 26px; height: 26px; }
     }
     @media (min-width: 481px) and (max-width: 768px) {
       .institutions-grid { grid-template-columns: repeat(3, 1fr); }
       .payment-methods   { grid-template-columns: repeat(3, 1fr); }
-      .institution-img   { max-height: 38px; }
-      .pay-img           { max-width: 60px; max-height: 36px; }
+      .institution-img   { max-height: 46px; }
+      .pay-img           { max-width: 72px; max-height: 43px; }
     }
     @media (min-width: 1024px) {
       .specialist-card { min-width: 280px; }
-      .hero-img        { max-width: 460px; }
-      .institution-img { max-height: 52px; }
-      .pay-img         { max-width: 72px; max-height: 44px; }
+      .hero-img        { max-width: 266px; }
+      .institution-img { max-height: 58px; }
+      .pay-img         { max-width: 86px; max-height: 52px; }
     }
   </style>
 </head>
